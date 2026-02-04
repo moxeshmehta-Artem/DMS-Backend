@@ -1,0 +1,1 @@
+-- Master script containing all DDL statements
