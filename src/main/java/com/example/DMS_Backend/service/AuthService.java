@@ -7,60 +7,74 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Collections;
+
+import com.example.DMS_Backend.security.jwt.JwtUtils;
+import com.example.DMS_Backend.dto.request.LoginRequest;
+import com.example.DMS_Backend.dto.request.SignupRequest;
+import com.example.DMS_Backend.dto.response.JwtResponse;
+import com.example.DMS_Backend.models.Role;
 
 @Service
 public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     /**
-     * Authenticate user with username and password
-     * 
-     * @param username Username
-     * @param password Plain text password
-     * @return User if authentication successful, empty otherwise
+     * Login user and generate JWT token
      */
-    public Optional<User> authenticate(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+    public Optional<JwtResponse> login(LoginRequest loginRequest) {
+        Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // Check if password matches
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return Optional.of(user);
+            // Check password
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                // Generate Token
+                String roleString = user.getRole().name();
+                String jwt = jwtUtils.generateToken(user.getUsername(), roleString);
+
+                return Optional.of(new JwtResponse(
+                        jwt,
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        Collections.singletonList(roleString)));
             }
         }
-
         return Optional.empty();
     }
 
     /**
      * Register a new user
-     * 
-     * @param user User to register (password should be plain text)
-     * @return Registered user with encoded password
+     * Throws RuntimeException if user already exists
      */
-    public User register(User user) {
-        // Encode password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
+    public void registerUser(SignupRequest signUpRequest) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            throw new RuntimeException("Error: Username is already taken!");
+        }
 
-    /**
-     * Check if username exists
-     */
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new RuntimeException("Error: Email is already in use!");
+        }
 
-    /**
-     * Check if email exists
-     */
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        // Create new user's account
+        User user = new User(
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                passwordEncoder.encode(signUpRequest.getPassword()),
+                Role.valueOf(signUpRequest.getRole()));
+
+        user.setFirstName(signUpRequest.getFirstName());
+        user.setLastName(signUpRequest.getLastName());
+
+        userRepository.save(user);
     }
 }

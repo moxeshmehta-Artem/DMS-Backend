@@ -1,50 +1,54 @@
 # DMS Backend Implementation Guide (Spring Boot + MySQL)
 
+### Progress Summary
+> **Current Status**: Project Initialized. **Authentication Module** acts as the foundation and is functionally complete (Login, Register).
+> **Remaining Work**: The core business logic modules (Patient Profiles, Vitals, Appointments, Diet Plans) are **NOT YET IMPLEMENTED**.
+
 This checklist tracks the development of the Diet Management System (DMS) backend, strictly following the layered architecture `controller -> service -> repository -> entity`.
 
 ## 1. Project Initialization & Configuration
-- [ ] **Dependency Management (pom.xml)**
+- [x] **Dependency Management (pom.xml)**
     - [x] Spring Boot Starter Web
     - [x] Spring Boot Starter Data JPA
     - [x] MySQL Driver
     - [x] Validation Starter
     - [x] Security Starter & JWT (JJWT)
-    - [ ] **Add Lombok** (Reduce boilerplate).
+    - [x] **Add Lombok** (Reduce boilerplate).
     - [ ] **Add ModelMapper/MapStruct** (DTO conversion).
-- [ ] **Database Configuration**
+- [x] **Database Configuration**
     - [x] Create MySQL database `DMS-DB`.
     - [x] Configure [application.properties](file:///home/artem/Desktop/DMS-Main/DMS-Backend/target/classes/application.properties).
-- [ ] **Folder Structure Setup**
-    - [ ] Ensure packages exist: `config`, `controllers`, `dto`, `models`, `exceptions`, `repositories`, `security`, `services`, `utils`.
+- [x] **Folder Structure Setup**
+    - [x] Ensure packages exist: `config`, `controllers`, `dto`, `models`, `exceptions`, `repositories`, `security`, `services`, `utils`.
 
-## 2. Authentication & Security Module
-- [ ] **Security Architecture & Config**
-    - [ ] Implement `SecurityConfig` (SecurityFilterChain).
-        - [ ] Disable CSRF.
-        - [ ] Configure `SessionCreationPolicy.STATELESS`.
-        - [ ] Configure CORS (Allow frontend origin).
-        - [ ] Define public endpoints (`/api/v1/auth/**`).
-    - [ ] Implement `AuthEntryPointJwt` (Custom 401 Unauthorized handler).
-- [ ] **Domain Entities (Auth)**
-    - [ ] Create `User` Entity (Implements `UserDetails` or wrapper).
-        - [ ] Fields: `id`, `username`, `email`, `password`, `firstName`, `lastName`, `role` (Enum), `phone`, `dob`.
-        - [ ] Audit Fields: `createdAt`, `updatedAt`.
-    - [ ] Create `Role` Enum (`ROLE_ADMIN`, `ROLE_DOCTOR`, `ROLE_DIETITIAN`, `ROLE_PATIENT`, `ROLE_FRONTDESK`).
-    - [ ] Create `UserRepository`: `findByUsername`, `existsByUsername`, `existsByEmail`.
-- [ ] **JWT Core Service**
-    - [ ] Implement `JwtUtils`:
-        - [ ] `generateJwtToken(authentication)`.
-        - [ ] `validateJwtToken(token)`.
-        - [ ] `getUserNameFromJwtToken(token)`.
-    - [ ] Implement `AuthTokenFilter`:
-        - [ ] Intercept requests -> Extract Token -> Validate -> Set SecurityContext.
-    - [ ] Implement `UserDetailsServiceImpl`: Load user from DB.
-- [ ] **Auth Business Logic (`AuthService`)**
-    - [ ] `registerUser(SignupRequest)`: Validate, Encode Password, Save.
-    - [ ] `authenticateUser(LoginRequest)`: Authenticate, Generate JWT.
-- [ ] **Auth Endpoints (`AuthController`)**
-    - [ ] `POST /api/v1/auth/register`: Signup.
-    - [ ] `POST /api/v1/auth/login`: Returns `{ token, type, id, username, email, roles }`.
+## 2. Authentication & Security Module (COMPLETED)
+- [x] **Security Architecture & Config**
+    - [x] Implement `SecurityConfig` (SecurityFilterChain).
+        - [x] Disable CSRF.
+        - [x] Configure `SessionCreationPolicy.STATELESS`.
+        - [x] Configure CORS (Allow frontend origin).
+        - [x] Define public endpoints (`/api/auth/**`).
+    - [x] Implement `AuthEntryPointJwt` (Custom 401 Unauthorized handler).
+- [x] **Domain Entities (Auth)**
+    - [x] Create `User` Entity (Implements `UserDetails` or wrapper).
+        - [x] Fields: `id`, `username`, `email`, `password`, `firstName`, `lastName`, `role` (Enum).
+        - [ ] Audit Fields: `createdAt`, `updatedAt` (Bonus).
+    - [x] Create `Role` Enum (`ROLE_ADMIN`, `ROLE_DOCTOR`, `ROLE_DIETITIAN`, `ROLE_PATIENT`, `ROLE_FRONTDESK`).
+    - [x] Create `UserRepository`: `findByUsername`, `existsByUsername`, `existsByEmail`.
+- [x] **JWT Core Service**
+    - [x] Implement `JwtUtils`:
+        - [x] `generateJwtToken(authentication)`.
+        - [x] `validateJwtToken(token)`.
+        - [x] `getUserNameFromJwtToken(token)`.
+    - [x] Implement `AuthTokenFilter`:
+        - [x] Intercept requests -> Extract Token -> Validate -> Set SecurityContext.
+    - [x] Implement `UserDetailsServiceImpl`: Load user from DB.
+- [x] **Auth Business Logic (`AuthService`)**
+    - [x] `registerUser(SignupRequest)`: Validate, Encode Password, Save.
+    - [x] `authenticateUser(LoginRequest)`: Authenticate, Generate JWT.
+- [x] **Auth Endpoints (`AuthController`)**
+    - [x] `POST /api/auth/register`: Signup.
+    - [x] `POST /api/auth/login`: Returns `{ token, type, id, username, email, roles }`.
 
 ## 3. Patient Management Module
 - [ ] **Patient Domain**
