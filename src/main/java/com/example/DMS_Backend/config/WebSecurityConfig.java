@@ -40,6 +40,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless API
+                .httpBasic(httpBasic -> httpBasic.disable()) // Disable HTTP Basic authentication
+                .formLogin(formLogin -> formLogin.disable()) // Disable form login
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()); // Allow all requests (JWT interceptor handles auth)
 
