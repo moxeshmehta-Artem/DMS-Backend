@@ -41,12 +41,13 @@ public class AuthService {
                 String roleString = user.getRole().name();
                 String jwt = jwtUtils.generateToken(user.getUsername(), roleString);
 
-                return Optional.of(new JwtResponse(
-                        jwt,
-                        user.getId(),
-                        user.getUsername(),
-                        user.getEmail(),
-                        Collections.singletonList(roleString)));
+                return Optional.of(JwtResponse.builder()
+                        .token(jwt)
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .roles(Collections.singletonList(roleString))
+                        .build());
             }
         }
         return Optional.empty();
@@ -66,14 +67,14 @@ public class AuthService {
         }
 
         // Create new user's account
-        User user = new User(
-                signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                passwordEncoder.encode(signUpRequest.getPassword()),
-                Role.valueOf(signUpRequest.getRole()));
-
-        user.setFirstName(signUpRequest.getFirstName());
-        user.setLastName(signUpRequest.getLastName());
+        User user = User.builder()
+                .username(signUpRequest.getUsername())
+                .email(signUpRequest.getEmail())
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .role(Role.valueOf(signUpRequest.getRole()))
+                .firstName(signUpRequest.getFirstName())
+                .lastName(signUpRequest.getLastName())
+                .build();
 
         userRepository.save(user);
     }

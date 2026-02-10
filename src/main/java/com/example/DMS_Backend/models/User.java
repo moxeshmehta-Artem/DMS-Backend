@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data; // Assuming Lombok is added
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +30,4 @@ public class User {
     // Additional fields
     private String firstName;
     private String lastName;
-
-    public User(String username, String email, String password, Role role) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 }
