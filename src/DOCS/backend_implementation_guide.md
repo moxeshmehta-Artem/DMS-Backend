@@ -51,15 +51,16 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `POST /api/auth/login`: Returns `{ token, type, id, username, email, roles }`.
 
 ## 3. Patient Management Module
-- [ ] **Patient Domain**
-    - [ ] Create [Patient](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#53-56) DTOs (`PatientResponse`, `PatientUpdateDTO`).
-    - [ ] *Note: Patients are `Users` with `ROLE_PATIENT`. Logic might be in `UserService` or separate `PatientService` if specific fields exist.*
+- [x] **Patient Domain**
+    - [x] Create [Patient](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#53-56) DTOs (`PatientResponse`, `PatientUpdateDTO`).
+    - [x] *Note: Patients are `Users` with `ROLE_PATIENT`. Logic is in `UserController`.*
+    - [x] Added `gender` field to User entity and response.
 - [ ] **Patient Service**
-    - [ ] `getAllPatients()`: List all users with `ROLE_PATIENT`.
+    - [x] `getAllPatients()`: List all users with `ROLE_PATIENT` (Implemented in Controller).
     - [ ] `getPatientById(id)`: Validate role is PATIENT.
     - [ ] `updatePatientProfile(id, dto)`: Update non-auth details.
 - [ ] **Patient Controller**
-    - [ ] `GET /api/v1/patients` (Admin/Doctor/Dietitian only).
+    - [x] `GET /api/v1/patients` (Implemented as `/api/users/patients`).
     - [ ] `GET /api/v1/patients/{id}`.
     - [ ] `PUT /api/v1/patients/{id}`.
 

@@ -23,6 +23,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String gender;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -30,4 +31,5 @@ public class User {
     // Additional fields
     private String firstName;
     private String lastName;
+  
 }
