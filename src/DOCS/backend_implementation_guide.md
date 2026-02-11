@@ -50,19 +50,22 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `POST /api/auth/register`: Signup.
     - [x] `POST /api/auth/login`: Returns `{ token, type, id, username, email, roles }`.
 
-## 3. Patient Management Module
+## 3. Patient Management Module (COMPLETED)
 - [x] **Patient Domain**
     - [x] Create [Patient](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#53-56) DTOs (`PatientResponse`, `PatientUpdateDTO`).
     - [x] *Note: Patients are `Users` with `ROLE_PATIENT`. Logic is in `UserController`.*
     - [x] Added `gender` field to User entity and response.
-- [ ] **Patient Service**
+- [x] **Patient Service**
     - [x] `getAllPatients()`: List all users with `ROLE_PATIENT` (Implemented in Controller).
-    - [ ] `getPatientById(id)`: Validate role is PATIENT.
-    - [ ] `updatePatientProfile(id, dto)`: Update non-auth details.
-- [ ] **Patient Controller**
+    - [x] `getPatientById(id)`: Validate role is PATIENT.
+    - [x] `updatePatientProfile(id, dto)`: Update non-auth details.
+- [x] **Patient Controller**
     - [x] `GET /api/v1/patients` (Implemented as `/api/users/patients`).
-    - [ ] `GET /api/v1/patients/{id}`.
-    - [ ] `PUT /api/v1/patients/{id}`.
+    - [x] `GET /api/v1/patients/{id}`.
+    - [x] `PUT /api/v1/patients/{id}`.
+- [x] **Utils**
+    - [x] `DataSeeder`: Initialize default Admin, Frontdesk, Dietitian, and Patient accounts on startup.
+    - [x] `GET /api/users/dietitians`: endpoint to fetch all dietitians.
 
 ## 4. Vitals Module
 - [ ] **Vitals Domain**
