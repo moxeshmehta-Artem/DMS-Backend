@@ -38,8 +38,9 @@ public class AuthService {
             // Check password
             if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
                 // Generate Token
+                // Generate Token
                 String roleString = user.getRole().name();
-                String jwt = jwtUtils.generateToken(user.getUsername(), roleString);
+                String jwt = jwtUtils.generateToken(user.getUsername(), roleString, user.getId());
 
                 return Optional.of(JwtResponse.builder()
                         .token(jwt)
@@ -74,6 +75,7 @@ public class AuthService {
                 .role(Role.valueOf(signUpRequest.getRole()))
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())
+                .gender(signUpRequest.getGender())
                 .build();
 
         userRepository.save(user);

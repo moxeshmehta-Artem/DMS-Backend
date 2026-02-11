@@ -26,9 +26,13 @@ public class JwtUtils {
     /**
      * Generate JWT token with username and role
      */
-    public String generateToken(String username, String role) {
+    /**
+     * Generate JWT token with username, role, and user ID
+     */
+    public String generateToken(String username, String role, Long id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
+        claims.put("id", id);
 
         return Jwts.builder()
                 .claims(claims)
@@ -53,6 +57,19 @@ public class JwtUtils {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    /**
+     * Get user ID from token
+     */
+    public Long getUserIdFromJwtToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(key())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.get("id", Long.class);
     }
 
     /**
