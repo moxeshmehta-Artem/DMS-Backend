@@ -52,4 +52,20 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/dietitians")
+    public ResponseEntity<List<PatientResponse>> getAllDietitians() {
+        List<User> dietitians = userRepository.findByRole(Role.ROLE_DIETITIAN);
+
+        List<PatientResponse> response = dietitians.stream().map(user -> PatientResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .gender(user.getGender())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build()).collect(Collectors.toList());
+
+        return ResponseEntity.ok(response);
+    }
 }
