@@ -68,33 +68,41 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `GET /api/users/dietitians`: endpoint to fetch all dietitians.
 
 ## 4. Vitals Module
-- [x] **Vitals Domain**
-    - [x] Create `Vitals` Entity.
-        - [x] Fields: `id`, `patient` (ManyToOne), `height`, `weight`, `bmi`, `bpSystolic`, `bpDiastolic`, `heartRate`, `temperature`, `recordedAt`.
-    - [x] Create `VitalsRepository`.
-- [x] **Vitals Service**
-    - [x] `addVitals(patientId, VitalsRequest)`: Calculate BMI automatically?
-    - [x] `getVitalsHistory(patientId)`: Return list sorted by date.
-- [x] **Vitals Controller**
-    - [x] `POST /api/v1/patients/{patientId}/vitals`.
-    - [x] `GET /api/v1/patients/{patientId}/vitals`.
+- [ ] **Vitals Domain**
+    - [ ] Create `Vitals` Entity.
+        - [ ] Fields: `id`, `patient` (ManyToOne), `height`, `weight`, `bmi`, `bloodPressureSys`, `bloodPressureDia`, `heartRate`, `temperature`, `recordedAt`.
+    - [ ] Create `VitalsRepository`.
+- [ ] **Vitals Logic (Service)**
+    - [ ] Create `VitalsService`.
+        - [ ] `addVitals(patientId, VitalsRequest)`: Validates input, calculates BMI automatically, saves to DB.
+        - [ ] `getVitalsHistory(patientId)`: Returns list of vitals sorted by `recordedAt` desc.
+- [ ] **Vitals API (Controller)**
+    - [ ] Create `VitalsController`.
+        - [ ] `POST /api/v1/patients/{patientId}/vitals`: Record new vitals. Request body: `VitalsRequest`.
+        - [ ] `GET /api/v1/patients/{patientId}/vitals`: Get history. Response: `List<VitalsResponse>`.
+    - [ ] Create DTOs:
+        - [ ] `VitalsRequest`: Input fields (height, weight, etc.).
+        - [ ] `VitalsResponse`: Output fields (including calculated BMI).
 
-## 5. Appointment Module (Scheduling)
-- [ ] **Appointment Domain**
-    - [ ] Create [Appointment](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#77-90) Entity.
-        - [ ] Fields: `id`, `patient` (ManyToOne), `provider` (ManyToOne), `appointmentDate`, `timeSlot`, `status` (Enum), `description`, `notes`.
-        - [ ] Enums: `PENDING`, `CONFIRMED`, `REJECTED`, `COMPLETED`, `CANCELLED`.
-    - [ ] Create `AppointmentRepository`.
-        - [ ] `findByPatientId`, `findByProviderId`, `findByDateAndProvider`.
-- [ ] **Appointment Service**
-    - [ ] [bookAppointment(request)](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#77-90): Check slot availability first.
-    - [ ] [updateStatus(id, status)](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts#91-97): Confirmed/Rejected/Completed.
-    - [ ] `addNotes(id, notes)`: Doctor adds clinical notes.
-    - [ ] `getAvailableSlots(providerId, date)`: Logic to calculate free slots.
-- [ ] **Appointment Controller**
-    - [ ] `POST /api/v1/appointments`: Book.
-    - [ ] `GET /api/v1/appointments`: Filter by date/doctor/patient.
-    - [ ] `PUT /api/v1/appointments/{id}/status`.
+## 5. Appointment Module (Scheduling) (PARTIALLY COMPLETED)
+- [x] **Appointment Domain**
+    - [x] Create `Appointment` Entity.
+        - [x] Fields: `id`, `patient` (ManyToOne), `dietitian` (ManyToOne), `appointmentDate`, `timeSlot`, `status` (Enum), `description`, `notes`.
+        - [x] Enums: `PENDING`, `CONFIRMED`, `REJECTED`, `COMPLETED`, `CANCELLED`.
+    - [x] Create `AppointmentRepository`.
+        - [x] `findByPatient`, `findByDietitian`, `findByAppointmentDateAndDietitian`.
+- [x] **Appointment Service**
+    - [x] `bookAppointment(request)`: Check slot availability first.
+    - [x] `updateStatus(id, status, notes)`: Confirmed/Rejected/Completed.
+    - [x] `getAllAppointments()`: Returns all appointments (Used by Frontdesk Dashboard).
+    - [x] `getPatientAppointments(patientId)`.
+    - [x] `getProviderAppointments(providerId)`.
+- [x] **Appointment Controller**
+    - [x] `POST /api/v1/appointments`: Book.
+    - [x] `GET /api/v1/appointments`: Fetch all.
+    - [x] `GET /api/v1/appointments/patient/{patientId}`.
+    - [x] `GET /api/v1/appointments/provider/{providerId}`.
+    - [x] `PUT /api/v1/appointments/{id}/status`.
 
 ## 6. Diet Plans Module
 - [ ] **Diet Plan Domain**
@@ -116,5 +124,13 @@ This checklist tracks the development of the Diet Management System (DMS) backen
 - [ ] **Validation**
     - [ ] Apply `@Valid` on all RequestBodies.
     - [ ] DTO Validation annotations (`@NotNull`, `@Size`, etc.).
-- [ ] **CORS Configuration**
-    - [ ] Allow requests from `http://localhost:4200` (Angular).
+- [x] **CORS Configuration**
+    - [x] Allow requests from `http://localhost:4200` (Angular).
+
+## 8. Performance & Dashboard Optimization (RECOMMENDED)
+- [ ] **Summary Dashboard Endpoint**
+    - [ ] Create `GET /api/v1/dashboard/summary` to return pre-calculated counts and chart data (Avoid fetching full lists).
+- [ ] **Pagination**
+    - [ ] Implement `Pageable` support for `GET /api/users/patients` and `GET /api/v1/appointments`.
+- [ ] **Targeted Queries**
+    - [ ] Optimize "Today's Appointments" query to only fetch relevant date range.
