@@ -68,16 +68,16 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `GET /api/users/dietitians`: endpoint to fetch all dietitians.
 
 ## 4. Vitals Module
-- [ ] **Vitals Domain**
-    - [ ] Create `Vitals` Entity.
-        - [ ] Fields: `id`, `patient` (ManyToOne), `height`, `weight`, `bmi`, `bpSystolic`, `bpDiastolic`, `heartRate`, `temperature`, `recordedAt`.
-    - [ ] Create `VitalsRepository`.
-- [ ] **Vitals Service**
-    - [ ] `addVitals(patientId, VitalsRequest)`: Calculate BMI automatically?
-    - [ ] `getVitalsHistory(patientId)`: Return list sorted by date.
-- [ ] **Vitals Controller**
-    - [ ] `POST /api/v1/patients/{patientId}/vitals`.
-    - [ ] `GET /api/v1/patients/{patientId}/vitals`.
+- [x] **Vitals Domain**
+    - [x] Create `Vitals` Entity.
+        - [x] Fields: `id`, `patient` (ManyToOne), `height`, `weight`, `bmi`, `bpSystolic`, `bpDiastolic`, `heartRate`, `temperature`, `recordedAt`.
+    - [x] Create `VitalsRepository`.
+- [x] **Vitals Service**
+    - [x] `addVitals(patientId, VitalsRequest)`: Calculate BMI automatically?
+    - [x] `getVitalsHistory(patientId)`: Return list sorted by date.
+- [x] **Vitals Controller**
+    - [x] `POST /api/v1/patients/{patientId}/vitals`.
+    - [x] `GET /api/v1/patients/{patientId}/vitals`.
 
 ## 5. Appointment Module (Scheduling)
 - [ ] **Appointment Domain**
