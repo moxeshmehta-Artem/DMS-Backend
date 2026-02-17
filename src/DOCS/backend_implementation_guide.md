@@ -1,8 +1,8 @@
 # DMS Backend Implementation Guide (Spring Boot + MySQL)
 
 ### Progress Summary
-> **Current Status**: Project Initialized. **Authentication Module** acts as the foundation and is functionally complete (Login, Register).
-> **Remaining Work**: The core business logic modules (Patient Profiles, Vitals, Appointments, Diet Plans) are **NOT YET IMPLEMENTED**.
+> **Current Status**: Project Foundation Complete. **Authentication**, **Patient Management**, **Vitals**, and **Appointment** modules are functionally complete.
+> **Remaining Work**: **Diet Plans** and final dashboard performance optimizations.
 
 This checklist tracks the development of the Diet Management System (DMS) backend, strictly following the layered architecture `controller -> service -> repository -> entity`.
 
@@ -67,39 +67,35 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `DataSeeder`: Initialize default Admin, Frontdesk, Dietitian, and Patient accounts on startup.
     - [x] `GET /api/users/dietitians`: endpoint to fetch all dietitians.
 
-## 4. Vitals Module
-- [ ] **Vitals Domain**
-    - [ ] Create `Vitals` Entity.
-        - [ ] Fields: `id`, `patient` (ManyToOne), `height`, `weight`, `bmi`, `bloodPressureSys`, `bloodPressureDia`, `heartRate`, `temperature`, `recordedAt`.
-    - [ ] Create `VitalsRepository`.
-- [ ] **Vitals Logic (Service)**
-    - [ ] Create `VitalsService`.
-        - [ ] `addVitals(patientId, VitalsRequest)`: Validates input, calculates BMI automatically, saves to DB.
-        - [ ] `getVitalsHistory(patientId)`: Returns list of vitals sorted by `recordedAt` desc.
-- [ ] **Vitals API (Controller)**
-    - [ ] Create `VitalsController`.
-        - [ ] `POST /api/v1/patients/{patientId}/vitals`: Record new vitals. Request body: `VitalsRequest`.
-        - [ ] `GET /api/v1/patients/{patientId}/vitals`: Get history. Response: `List<VitalsResponse>`.
-    - [ ] Create DTOs:
-        - [ ] `VitalsRequest`: Input fields (height, weight, etc.).
-        - [ ] `VitalsResponse`: Output fields (including calculated BMI).
+## 4. Vitals Module (COMPLETED)
+- [x] **Vitals Domain**
+    - [x] Create `Vitals` Entity.
+        - [x] Fields: `id`, `patient`, `height`, `weight`, `bmi`, `bloodPressureSys/Dia`, `heartRate`, `temperature`, `recordedAt`.
+    - [x] Create `VitalsRepository`.
+- [x] **Vitals Logic (Service)**
+    - [x] Create `VitalsService`.
+        - [x] `addVitals(patientId, Request)`: Validates input, calculates BMI automatically, saves to DB.
+        - [x] `updateVitals(vitalsId, Request)`: Allows editing existing records.
+        - [x] `getLatestVitals(patientId)`: Returns most recent recorded data.
+        - [x] `getVitalsHistory(patientId)`: Returns list of vitals sorted by `recordedAt` desc.
+- [x] **Vitals API (Controller)**
+    - [x] Create `VitalsController`.
+        - [x] `POST /api/v1/patients/{patientId}/vitals`: Record new vitals. Request body: `VitalsRequest`.
+        - [x] `PUT /api/v1/patients/vitals/{vitalsId}`.
+        - [x] `GET /api/v1/patients/{patientId}/vitals/latest`.
 
-## 5. Appointment Module (Scheduling) (PARTIALLY COMPLETED)
+## 5. Appointment Module (COMPLETED)
 - [x] **Appointment Domain**
-    - [x] Create `Appointment` Entity.
-        - [x] Fields: `id`, `patient` (ManyToOne), `dietitian` (ManyToOne), `appointmentDate`, `timeSlot`, `status` (Enum), `description`, `notes`.
+    - [x] Create `Appointment` Entity & Repository.
         - [x] Enums: `PENDING`, `CONFIRMED`, `REJECTED`, `COMPLETED`, `CANCELLED`.
-    - [x] Create `AppointmentRepository`.
-        - [x] `findByPatient`, `findByDietitian`, `findByAppointmentDateAndDietitian`.
 - [x] **Appointment Service**
-    - [x] `bookAppointment(request)`: Check slot availability first.
+    - [x] `bookAppointment(request)`: Checks for ongoing appointments and slot conflicts.
+    - [x] **Vitals Check Constraint**: Enforce that vitals must be recorded before booking.
     - [x] `updateStatus(id, status, notes)`: Confirmed/Rejected/Completed.
-    - [x] `getAllAppointments()`: Returns all appointments (Used by Frontdesk Dashboard).
     - [x] `getPatientAppointments(patientId)`.
     - [x] `getProviderAppointments(providerId)`.
 - [x] **Appointment Controller**
     - [x] `POST /api/v1/appointments`: Book.
-    - [x] `GET /api/v1/appointments`: Fetch all.
     - [x] `GET /api/v1/appointments/patient/{patientId}`.
     - [x] `GET /api/v1/appointments/provider/{providerId}`.
     - [x] `PUT /api/v1/appointments/{id}/status`.
