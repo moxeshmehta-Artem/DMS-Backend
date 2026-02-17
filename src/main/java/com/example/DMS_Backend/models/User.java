@@ -24,12 +24,13 @@ public class User {
     private String email;
     private String password;
     private String gender;
-
+    private int age;
+    private java.time.LocalDate dateOfBirth;
     @Enumerated(EnumType.STRING)
     private Role role;
 
     // Additional fields
     private String firstName;
     private String lastName;
-  
+
 }

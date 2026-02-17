@@ -18,4 +18,6 @@ public class AppointmentResponse {
     private AppointmentStatus status;
     private String description;
     private String notes;
+    private boolean success;
+    private String message;
 }

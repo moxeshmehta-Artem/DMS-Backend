@@ -67,6 +67,12 @@ public class AuthService {
             throw new RuntimeException("Error: Email is already in use!");
         }
 
+        // Calculate age
+        int age = 0;
+        if (signUpRequest.getDateOfBirth() != null) {
+            age = java.time.Period.between(signUpRequest.getDateOfBirth(), java.time.LocalDate.now()).getYears();
+        }
+
         // Create new user's account
         User user = User.builder()
                 .username(signUpRequest.getUsername())
@@ -76,6 +82,8 @@ public class AuthService {
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())
                 .gender(signUpRequest.getGender())
+                .dateOfBirth(signUpRequest.getDateOfBirth())
+                .age(age)
                 .build();
 
         userRepository.save(user);

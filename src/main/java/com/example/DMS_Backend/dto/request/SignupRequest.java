@@ -16,6 +16,8 @@ public class SignupRequest {
     @NotBlank
     private String role;
 
+    private java.time.LocalDate dateOfBirth;
+
     private String firstName;
     private String lastName;
     private String gender;

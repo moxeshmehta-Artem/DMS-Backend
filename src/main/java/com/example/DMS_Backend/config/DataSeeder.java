@@ -23,6 +23,9 @@ public class DataSeeder {
                         .role(Role.ROLE_ADMIN)
                         .firstName("Super")
                         .lastName("Admin")
+                        .dateOfBirth(java.time.LocalDate.of(1985, 5, 20))
+                        .age(java.time.Period.between(java.time.LocalDate.of(1985, 5, 20), java.time.LocalDate.now())
+                                .getYears())
                         .build();
                 userRepository.save(admin);
                 System.out.println("Seeded Admin User");
@@ -37,6 +40,9 @@ public class DataSeeder {
                         .role(Role.ROLE_FRONTDESK)
                         .firstName("Front")
                         .lastName("Desk")
+                        .dateOfBirth(java.time.LocalDate.of(1990, 10, 15))
+                        .age(java.time.Period.between(java.time.LocalDate.of(1990, 10, 15), java.time.LocalDate.now())
+                                .getYears())
                         .build();
                 userRepository.save(frontdesk);
                 System.out.println("Seeded Frontdesk User");
@@ -52,6 +58,9 @@ public class DataSeeder {
                         .firstName("Sarah")
                         .lastName("Nutritionist")
                         .gender("Female")
+                        .dateOfBirth(java.time.LocalDate.of(1988, 3, 10))
+                        .age(java.time.Period.between(java.time.LocalDate.of(1988, 3, 10), java.time.LocalDate.now())
+                                .getYears())
                         .build();
                 userRepository.save(dietitian);
                 System.out.println("Seeded Dietitian User");
@@ -67,6 +76,9 @@ public class DataSeeder {
                         .firstName("John")
                         .lastName("Doe")
                         .gender("Male")
+                        .dateOfBirth(java.time.LocalDate.of(1995, 7, 25))
+                        .age(java.time.Period.between(java.time.LocalDate.of(1995, 7, 25), java.time.LocalDate.now())
+                                .getYears())
                         .build();
                 userRepository.save(patient);
                 System.out.println("Seeded Patient User");
