@@ -81,6 +81,7 @@ public class AuthService {
                 .role(Role.valueOf(signUpRequest.getRole()))
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())
+                .phone(signUpRequest.getPhone())
                 .gender(signUpRequest.getGender())
                 .dateOfBirth(signUpRequest.getDateOfBirth())
                 .age(age)

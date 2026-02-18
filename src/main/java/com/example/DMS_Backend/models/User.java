@@ -32,5 +32,6 @@ public class User {
     // Additional fields
     private String firstName;
     private String lastName;
+    private String phone;
 
 }

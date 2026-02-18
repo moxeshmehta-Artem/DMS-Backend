@@ -10,4 +10,6 @@ public interface VitalsRepository extends JpaRepository<Vitals, Long> {
     List<Vitals> findByPatientOrderByRecordedAtDesc(User patient);
 
     Optional<Vitals> findFirstByPatientOrderByRecordedAtDesc(User patient);
+
+    boolean existsByPatient(User patient);
 }

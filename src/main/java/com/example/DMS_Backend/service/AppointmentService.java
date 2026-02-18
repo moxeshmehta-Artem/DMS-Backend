@@ -24,6 +24,7 @@ public class AppointmentService {
 
         private final AppointmentRepository appointmentRepository;
         private final UserRepository userRepository;
+        private final com.example.DMS_Backend.repositories.VitalsRepository vitalsRepository;
 
         @Transactional
         public AppointmentResponse bookAppointment(AppointmentRequest request) {
@@ -33,6 +34,16 @@ public class AppointmentService {
                 User provider = userRepository.findById(request.getProviderId())
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                                 "Provider not found with ID: " + request.getProviderId()));
+
+                // Check if patient has vitals recorded
+                if (!vitalsRepository.existsByPatient(patient)) {
+                        String msg = "Vitals not recorded, yet.";
+                        log.info("Booking restriction: Patient {} has no vitals recorded", patient.getId());
+                        return AppointmentResponse.builder()
+                                        .success(false)
+                                        .message(msg)
+                                        .build();
+                }
 
                 // Check if patient already has an ongoing appointment
                 List<Appointment> patientActiveAppointments = appointmentRepository.findByPatientAndStatusIn(

@@ -13,5 +13,6 @@ public class PatientResponse {
     private String firstName;
     private String lastName;
     private int age;
+    private String phone;
     private VitalsResponse vitals;
 }

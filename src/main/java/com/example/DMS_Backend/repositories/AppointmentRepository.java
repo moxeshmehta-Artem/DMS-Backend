@@ -19,8 +19,4 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findByAppointmentDateAndDietitian(LocalDate appointmentDate, User dietitian);
 
     List<Appointment> findByPatientAndStatusIn(User patient, List<AppointmentStatus> statuses);
-
-    long countByStatus(AppointmentStatus status);
-
-    long countByAppointmentDate(LocalDate date);
 }

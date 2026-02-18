@@ -6,8 +6,6 @@ import com.example.DMS_Backend.models.User;
 import com.example.DMS_Backend.repositories.AppointmentRepository;
 import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.service.VitalsService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,10 +47,10 @@ public class UserController {
     }
 
     @GetMapping("/patients")
-    public ResponseEntity<Page<PatientResponse>> getAllPatients(Pageable pageable) {
-        Page<User> patients = userRepository.findByRole(Role.ROLE_PATIENT, pageable);
+    public ResponseEntity<List<PatientResponse>> getAllPatients() {
+        List<User> patients = userRepository.findByRole(Role.ROLE_PATIENT);
 
-        Page<PatientResponse> response = patients.map(user -> PatientResponse.builder()
+        List<PatientResponse> response = patients.stream().map(user -> PatientResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .age(user.getAge())
@@ -60,8 +58,9 @@ public class UserController {
                 .gender(user.getGender())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .phone(user.getPhone())
                 .vitals(vitalsService.getLatestVitals(user.getId()))
-                .build());
+                .build()).collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }

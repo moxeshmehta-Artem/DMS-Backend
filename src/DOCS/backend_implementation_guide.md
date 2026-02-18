@@ -1,8 +1,8 @@
 # DMS Backend Implementation Guide (Spring Boot + MySQL)
 
 ### Progress Summary
-> **Current Status**: Project Foundation Complete. **Authentication**, **Patient Management**, **Vitals**, **Appointment**, and **Diet Plans** modules are functionally complete.
-> **Remaining Work**: Final dashboard performance optimizations.
+> **Current Status**: Project Foundation Complete. **Authentication**, **Patient Management**, **Vitals**, and **Appointment** modules are functionally complete.
+> **Remaining Work**: **Diet Plans** and final dashboard performance optimizations.
 
 This checklist tracks the development of the Diet Management System (DMS) backend, strictly following the layered architecture `controller -> service -> repository -> entity`.
 
@@ -90,7 +90,7 @@ This checklist tracks the development of the Diet Management System (DMS) backen
         - [x] Enums: `PENDING`, `CONFIRMED`, `REJECTED`, `COMPLETED`, `CANCELLED`.
 - [x] **Appointment Service**
     - [x] `bookAppointment(request)`: Checks for ongoing appointments and slot conflicts.
-    - [ ] **Vitals Check Constraint**: Enforce that vitals must be recorded before booking.
+    - [x] **Vitals Check Constraint**: Enforce that vitals must be recorded before booking.
     - [x] `updateStatus(id, status, notes)`: Confirmed/Rejected/Completed.
     - [x] `getPatientAppointments(patientId)`.
     - [x] `getProviderAppointments(providerId)`.
@@ -100,27 +100,26 @@ This checklist tracks the development of the Diet Management System (DMS) backen
     - [x] `GET /api/v1/appointments/provider/{providerId}`.
     - [x] `PUT /api/v1/appointments/{id}/status`.
 
-## 6. Diet Plans Module (COMPLETED)
-- [x] **Diet Plan Domain**
-    - [x] Create `DietPlan` Entity.
-        - [x] Fields: `id`, `patient` (ManyToOne), `assignedBy` (ManyToOne), `breakfast`, `lunch`, `dinner`, `snacks`, `createdAt`.
-    - [x] Create `DietPlanRepository`.
-- [x] **Diet Plan Service**
-    - [x] `createDietPlan(request)`: Assign to patient.
-    - [x] `getLatestDietPlan(patientId)`.
-    - [x] `getDietPlanHistory(patientId)`.
-- [x] **Diet Plan Controller**
-    - [x] `POST /api/v1/patients/{id}/diet-plans`.
-    - [x] `GET /api/v1/patients/{id}/diet-plans/latest` (Updated).
-    - [x] `GET /api/v1/patients/{id}/diet-plans/history` (Updated).
+## 6. Diet Plans Module
+- [ ] **Diet Plan Domain**
+    - [ ] Create `DietPlan` Entity.
+        - [ ] Fields: `id`, `patient` (ManyToOne), `assignedBy` (ManyToOne), `breakfast`, `lunch`, `dinner`, `snacks`, `createdAt`.
+    - [ ] Create `DietPlanRepository`.
+- [ ] **Diet Plan Service**
+    - [ ] `createDietPlan(request)`: Assign to patient.
+    - [ ] `getLatestDietPlan(patientId)`.
+    - [ ] `getDietPlanHistory(patientId)`.
+- [ ] **Diet Plan Controller**
+    - [ ] `POST /api/v1/patients/{id}/diet-plans`.
+    - [ ] `GET /api/v1/patients/{id}/diet-plans`.
 
 ## 7. Cross-Cutting & Utilities
-- [x] **Global Exception Handling**
-    - [x] `@ControllerAdvice`: Handle `EntityNotFound`, `BadCredentials`.
-    - [x] Standard JSON Error Response.
-- [x] **Validation**
-    - [x] Apply `@Valid` on all RequestBodies.
-    - [x] DTO Validation annotations (`@NotNull`, `@Size`, etc.).
+- [ ] **Global Exception Handling**
+    - [ ] `@ControllerAdvice`: Handle `EntityNotFound`, `BadCredentials`.
+    - [ ] Standard JSON Error Response.
+- [ ] **Validation**
+    - [ ] Apply `@Valid` on all RequestBodies.
+    - [ ] DTO Validation annotations (`@NotNull`, `@Size`, etc.).
 - [x] **CORS Configuration**
     - [x] Allow requests from `http://localhost:4200` (Angular).
 
