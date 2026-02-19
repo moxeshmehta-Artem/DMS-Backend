@@ -25,6 +25,7 @@ public class AppointmentService {
         private final AppointmentRepository appointmentRepository;
         private final UserRepository userRepository;
         private final com.example.DMS_Backend.repositories.VitalsRepository vitalsRepository;
+        private final com.example.DMS_Backend.repositories.DietitianScheduleRepository dietitianScheduleRepository;
 
         @Transactional
         public AppointmentResponse bookAppointment(AppointmentRequest request) {
@@ -148,12 +149,31 @@ public class AppointmentService {
                 User provider = userRepository.findById(providerId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Provider not found"));
 
-                // 1. Define Standard Slots (Could be moved to config/DB later)
-                List<String> allSlots = Arrays.asList(
-                                "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-                                "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM");
+                // 1. Fetch Doctor's Schedule for the given Day of Week
+                String dayOfWeek = date.getDayOfWeek().name(); // e.g., "MONDAY"
+                java.util.Optional<com.example.DMS_Backend.models.DietitianSchedule> scheduleOpt = dietitianScheduleRepository
+                                .findByDietitianAndDayOfWeek(provider, dayOfWeek);
 
-                // 2. Fetch Booked Slots (CONFIRMED or PENDING)
+                if (scheduleOpt.isEmpty() || !scheduleOpt.get().isAvailable()) {
+                        return new java.util.ArrayList<>(); // Doctor not working/available
+                }
+
+                com.example.DMS_Backend.models.DietitianSchedule schedule = scheduleOpt.get();
+                java.time.LocalTime startTime = schedule.getStartTime();
+                java.time.LocalTime endTime = schedule.getEndTime();
+
+                // 2. Generate Standard Slots (1-hour intervals)
+                List<String> allSlots = new java.util.ArrayList<>();
+                java.time.LocalTime current = startTime;
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a",
+                                java.util.Locale.ENGLISH);
+
+                while (current.isBefore(endTime)) {
+                        allSlots.add(current.format(formatter));
+                        current = current.plusHours(1);
+                }
+
+                // 3. Fetch Booked Slots (CONFIRMED or PENDING)
                 List<Appointment> bookedAppointments = appointmentRepository
                                 .findByAppointmentDateAndDietitianAndStatusIn(
                                                 date,
@@ -164,12 +184,12 @@ public class AppointmentService {
                                 .map(Appointment::getTimeSlot)
                                 .collect(Collectors.toList());
 
-                // 3. Subtract Booked from All
+                // 4. Subtract Booked from All
                 List<String> availableSlots = allSlots.stream()
                                 .filter(slot -> !bookedSlots.contains(slot))
                                 .collect(Collectors.toList());
 
-                // 4. Filter out past slots if date is today
+                // 5. Filter out past slots if date is today
                 if (date.equals(java.time.LocalDate.now())) {
                         java.time.LocalTime now = java.time.LocalTime.now();
                         availableSlots = availableSlots.stream()

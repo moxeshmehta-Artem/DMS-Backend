@@ -22,6 +22,9 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
+    private DietitianScheduleService dietitianScheduleService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -88,5 +91,9 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+
+        if (user.getRole() == Role.ROLE_DIETITIAN) {
+            dietitianScheduleService.createDefaultSchedule(user);
+        }
     }
 }

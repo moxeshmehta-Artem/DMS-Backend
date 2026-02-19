@@ -14,6 +14,9 @@ public class PatientService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private VitalsService vitalsService;
+
     public PatientResponse getPatientById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Error: Patient not found."));
@@ -55,6 +58,7 @@ public class PatientService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .gender(user.getGender())
+                .vitals(vitalsService.getLatestVitals(user.getId()))
                 .build();
     }
 }
