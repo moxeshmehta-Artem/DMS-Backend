@@ -165,9 +165,29 @@ public class AppointmentService {
                                 .collect(Collectors.toList());
 
                 // 3. Subtract Booked from All
-                return allSlots.stream()
+                List<String> availableSlots = allSlots.stream()
                                 .filter(slot -> !bookedSlots.contains(slot))
                                 .collect(Collectors.toList());
+
+                // 4. Filter out past slots if date is today
+                if (date.equals(java.time.LocalDate.now())) {
+                        java.time.LocalTime now = java.time.LocalTime.now();
+                        availableSlots = availableSlots.stream()
+                                        .filter(slot -> {
+                                                java.time.LocalTime slotTime = parseTimeSlot(slot);
+                                                return slotTime.isAfter(now);
+                                        })
+                                        .collect(Collectors.toList());
+                }
+
+                return availableSlots;
+        }
+
+        private java.time.LocalTime parseTimeSlot(String timeSlot) {
+                // timeSlot format: "09:00 AM"
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a",
+                                java.util.Locale.ENGLISH);
+                return java.time.LocalTime.parse(timeSlot, formatter);
         }
 
         private String getFullName(User user) {
