@@ -132,12 +132,9 @@ public class AppointmentService {
                 return AppointmentResponse.builder()
                                 .id(appointment.getId())
                                 .patientId(appointment.getPatient().getId())
-                                .patientName(appointment.getPatient().getFirstName() + " "
-                                                + appointment.getPatient().getLastName())
+                                .patientName(getFullName(appointment.getPatient()))
                                 .providerId(appointment.getDietitian().getId())
-                                .providerName(
-                                                appointment.getDietitian().getFirstName() + " "
-                                                                + appointment.getDietitian().getLastName())
+                                .providerName(getFullName(appointment.getDietitian()))
                                 .appointmentDate(appointment.getAppointmentDate())
                                 .timeSlot(appointment.getTimeSlot())
                                 .status(appointment.getStatus())
@@ -145,5 +142,47 @@ public class AppointmentService {
                                 .notes(appointment.getNotes())
                                 .success(true)
                                 .build();
+        }
+
+        public List<String> getAvailableSlots(Long providerId, java.time.LocalDate date) {
+                User provider = userRepository.findById(providerId)
+                                .orElseThrow(() -> new ResourceNotFoundException("Provider not found"));
+
+                // 1. Define Standard Slots (Could be moved to config/DB later)
+                List<String> allSlots = Arrays.asList(
+                                "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+                                "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM");
+
+                // 2. Fetch Booked Slots (CONFIRMED or PENDING)
+                List<Appointment> bookedAppointments = appointmentRepository
+                                .findByAppointmentDateAndDietitianAndStatusIn(
+                                                date,
+                                                provider,
+                                                Arrays.asList(AppointmentStatus.CONFIRMED, AppointmentStatus.PENDING));
+
+                List<String> bookedSlots = bookedAppointments.stream()
+                                .map(Appointment::getTimeSlot)
+                                .collect(Collectors.toList());
+
+                // 3. Subtract Booked from All
+                return allSlots.stream()
+                                .filter(slot -> !bookedSlots.contains(slot))
+                                .collect(Collectors.toList());
+        }
+
+        private String getFullName(User user) {
+                String firstName = user.getFirstName();
+                String lastName = user.getLastName();
+
+                if (firstName != null && !firstName.isBlank() && lastName != null && !lastName.isBlank()) {
+                        return firstName + " " + lastName;
+                }
+
+                if (firstName != null && !firstName.isBlank())
+                        return firstName;
+                if (lastName != null && !lastName.isBlank())
+                        return lastName;
+
+                return user.getUsername();
         }
 }

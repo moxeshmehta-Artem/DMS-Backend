@@ -46,4 +46,11 @@ public class AppointmentController {
             @RequestParam(required = false) String notes) {
         return ResponseEntity.ok(appointmentService.updateStatus(id, status, notes));
     }
+
+    @GetMapping("/available-slots")
+    public ResponseEntity<List<String>> getAvailableSlots(
+            @RequestParam Long providerId,
+            @RequestParam @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) java.time.LocalDate date) {
+        return ResponseEntity.ok(appointmentService.getAvailableSlots(providerId, date));
+    }
 }
