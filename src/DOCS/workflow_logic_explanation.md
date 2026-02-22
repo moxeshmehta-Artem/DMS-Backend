@@ -47,6 +47,7 @@ The registration process is handled by a staff member or staff component.
 *   **Line 46-47:** `onSubmit()` triggers when the form is submitted and valid.
 *   **Line 50-62:** A `newUser` object is constructed from form values.
 *   **Line 64:** `authService.registerPatient(newUser, formVal.password)` is called.
+    *   *Note:* The `AuthService` handles the core registration and authentication logic, while data fetching is delegated to `UserService`.
 *   **Line 67:** On success, a PrimeNG Toast message is shown: "Patient Registered Successfully".
 
 ### Backend Explanation
@@ -61,12 +62,12 @@ The registration process is handled by a staff member or staff component.
 
 ## Step 2: Dietitian Addition by Admin
 
-Admins can add new dietitians to the system.
+Admins can add new dietitians to the system via the Dietitian Management component.
 
 ### Frontend Explanation
 **File:** [add-dietitian.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/dietitian-management/add-dietitian/add-dietitian.component.ts)
 
-*   **Line 105:** `appointmentService.addDietitian(...)` is called with dietitian details.
+*   **Line 105:** `appointmentService.addDietitian(...)` is called. This method in the [AppointmentService](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/appointment.service.ts) delegates to `AuthService.registerDietitian`.
 *   **Line 115:** Shows "Dietitian added successfully" upon success.
 
 ### Backend Explanation
@@ -78,26 +79,28 @@ Admins can add new dietitians to the system.
         dietitianScheduleService.createDefaultSchedule(user);
     }
     ```
-    When a dietitian is saved, the system automatically creates a default working schedule for them, allowing patients to see available slots immediately.
+    When a dietitian is saved, the system automatically creates a default working schedule (e.g., 9 AM - 5 PM) for them, allowing patients to see available slots immediately.
 
 ---
 
 ## Step 3: Patient Selects Dietitian and Books Appointment
 
-Patients can view list of dietitians and choose a time slot.
+Patients view a curated list of dietitians and choose an available time slot.
 
 ### Frontend Explanation
 **File:** [doctor-selection.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/doctor-selection/doctor-selection.component.ts)
 
-*   **Line 98:** `getAvailableSlots(doctorId, date)` fetches slots that are not already booked.
-*   **Line 131:** `confirmBooking()` calls the booking API.
+*   **Line 58:** `appointmentService.getDietitians()` is called on initialization.
+    *   *Refactor Note:* Internally, `AppointmentService` now uses the [UserService](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/user.service.ts) to fetch the dietitian list from the backend, adhering to the Single Responsibility Principle.
+*   **Line 98:** `getAvailableSlots(doctorId, date)` fetches valid slots from the backend.
+*   **Line 131:** `confirmBooking()` calls the booking API in `AppointmentService`.
 *   **Line 140:** Notifies patient: "Appointment Request Sent!".
 
 ### Backend Explanation
 **File:** [AppointmentService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/AppointmentService.java)
 
 *   **Line 40:** `!vitalsRepository.existsByPatient(patient)` check ensures patients have vitals recorded before booking.
-*   **Line 50:** Checks if the patient already has an active `PENDING` or `CONFIRMED` appointment.
+*   **Line 50-53:** Ensures a patient cannot book multiple concurrent appointments.
 *   **Line 63-71:** Checks for **Time Slot Conflicts** for that specific dietitian.
 *   **Line 87:** Sets initial status to `AppointmentStatus.PENDING`.
 
@@ -105,13 +108,14 @@ Patients can view list of dietitians and choose a time slot.
 
 ## Step 4: Dietitian Approves Appointment
 
-Dietitians view their dashboard to manage requests.
+Dietitians manage their queue from the Appointment Management dashboard.
 
 ### Frontend Explanation
 **File:** [appointment.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/appointments/appointment.component.ts)
 
 *   **Line 65:** The "Accept" button calls `updateStatus(appt, 'CONFIRMED')`.
-*   **Line 238:** Calls the backend `updateStatus` API.
+*   **Line 238:** Calls the backend `updateStatus` API via `AppointmentService`.
+*   *Note:* The component now uses [UserService](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/user.service.ts) to resolve patient details for the "View Patient" dialog.
 
 ### Backend Explanation
 **File:** [AppointmentService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/AppointmentService.java)
@@ -121,25 +125,25 @@ Dietitians view their dashboard to manage requests.
 
 ---
 
-## Step 5: Dietitian Adds Diet Plan
+## Step 5: Diet Plan Creation
 
-Once an appointment is confirmed, the dietitian can create a specific plan.
+Once an appointment is confirmed and takes place, the dietitian creates the diet plan.
 
 ### Frontend Explanation
 **File:** [appointment.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/appointments/appointment.component.ts)
 
 *   **Line 112:** "Save & Complete" button triggers `saveDietPlan()`.
 *   **Line 198:** `patientService.saveDietPlan(patientId, newPlan)` sends the data to the backend.
-*   **Line 200:** `updateStatus(appt, 'COMPLETED')` automatically marks the appointment as finished.
+*   **Line 200:** `updateStatus(appt, 'COMPLETED')` automatically marks the appointment as finished after the plan is saved.
 
 ### Backend Explanation
-**File:** [DietPlanService.java](file:///home/artem/Desktop/DMS-Backend/src/main/java/com/example/DMS_Backend/service/DietPlanService.java)
+**File:** [DietPlanService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/DietPlanService.java)
 
-*   **Line 32-41:** A new `DietPlan` entity is built with Breakfast, Lunch, Dinner, and Snacks.
+*   **Line 32-39:** A new `DietPlan` entity is built using the Builder pattern.
 *   **Line 41:** `dietPlanRepository.save(dietPlan)` stores the plan.
-*   **Line 49:** `findFirstByPatientOrderByCreatedAtDesc` ensures the patient always sees their **latest** plan in the "My Diet Plan" view.
+*   **Line 49:** `findFirstByPatientOrderByCreatedAtDesc` ensures the patient always sees their **latest** plan in their dashboard view.
 
 ---
 
 > [!TIP]
-> This end-to-end integration ensures that data flows synchronously from Admin (setup) to Patient (engagement) and finally to Dietitian (execution).
+> The recent refactoring has decoupled **Authentication** (handled by `AuthService`) from **User Management** (handled by `UserService`), making the frontend architecture more robust and alignment with the backend service layer.
