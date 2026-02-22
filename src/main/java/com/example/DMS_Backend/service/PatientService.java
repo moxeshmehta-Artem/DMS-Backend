@@ -2,20 +2,20 @@ package com.example.DMS_Backend.service;
 
 import com.example.DMS_Backend.dto.request.PatientUpdateDTO;
 import com.example.DMS_Backend.dto.response.PatientResponse;
+import com.example.DMS_Backend.mapper.PatientMapper;
 import com.example.DMS_Backend.models.Role;
 import com.example.DMS_Backend.models.User;
 import com.example.DMS_Backend.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PatientService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private VitalsService vitalsService;
+    private final UserRepository userRepository;
+    private final VitalsService vitalsService;
+    private final PatientMapper patientMapper;
 
     public PatientResponse getPatientById(Long id) {
         User user = userRepository.findById(id)
@@ -51,14 +51,8 @@ public class PatientService {
     }
 
     private PatientResponse mapToPatientResponse(User user) {
-        return PatientResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .gender(user.getGender())
-                .vitals(vitalsService.getLatestVitals(user.getId()))
-                .build();
+        PatientResponse response = patientMapper.toResponse(user);
+        response.setVitals(vitalsService.getLatestVitals(user.getId()));
+        return response;
     }
 }

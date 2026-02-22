@@ -6,7 +6,7 @@ import com.example.DMS_Backend.dto.response.JwtResponse;
 import com.example.DMS_Backend.dto.response.MessageResponse;
 import com.example.DMS_Backend.service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,10 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-        @Autowired
-        private AuthService authService;
+        private final AuthService authService;
 
         @PostMapping("/login")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

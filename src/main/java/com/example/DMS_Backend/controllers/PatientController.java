@@ -3,7 +3,7 @@ package com.example.DMS_Backend.controllers;
 import com.example.DMS_Backend.dto.request.PatientUpdateDTO;
 import com.example.DMS_Backend.dto.response.PatientResponse;
 import com.example.DMS_Backend.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/patients")
+@RequiredArgsConstructor
 public class PatientController {
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('PATIENT') or hasRole('ADMIN') or hasRole('DIETITIAN')")

@@ -2,7 +2,7 @@ package com.example.DMS_Backend.service;
 
 import com.example.DMS_Backend.models.User;
 import com.example.DMS_Backend.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +16,13 @@ import com.example.DMS_Backend.dto.response.JwtResponse;
 import com.example.DMS_Backend.models.Role;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private DietitianScheduleService dietitianScheduleService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final UserRepository userRepository;
+    private final DietitianScheduleService dietitianScheduleService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
     /**
      * Login user and generate JWT token

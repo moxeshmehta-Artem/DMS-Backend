@@ -65,6 +65,15 @@ public class VitalsService {
                 .orElse(null);
     }
 
+    public List<VitalsResponse> getLatestVitalsForPatients(List<User> patients) {
+        if (patients.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        return vitalsRepository.findLatestVitalsByPatients(patients).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public VitalsResponse updateVitals(Long vitalsId, VitalsRequest request) {
         Vitals vitals = vitalsRepository.findById(vitalsId)

@@ -1,31 +1,31 @@
 package com.example.DMS_Backend.controllers;
 
 import com.example.DMS_Backend.dto.response.PatientResponse;
+import com.example.DMS_Backend.dto.response.VitalsResponse;
 import com.example.DMS_Backend.models.Role;
 import com.example.DMS_Backend.models.User;
 import com.example.DMS_Backend.repositories.AppointmentRepository;
 import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.service.VitalsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.DMS_Backend.mapper.PatientMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    @Autowired
-    private VitalsService vitalsService;
+    private final UserRepository userRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final VitalsService vitalsService;
+    private final PatientMapper patientMapper;
 
     @GetMapping
     public ResponseEntity<List<PatientResponse>> getAllUsers() {
@@ -33,15 +33,9 @@ public class UserController {
         // Let's filter for valid users (maybe exclude admins in future if needed)
         List<User> users = userRepository.findAll();
 
-        List<PatientResponse> response = users.stream().map(user -> PatientResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .gender(user.getGender())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .age(user.getAge())
-                .build()).collect(Collectors.toList());
+        List<PatientResponse> response = users.stream()
+                .map(patientMapper::toResponse)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }
@@ -50,17 +44,16 @@ public class UserController {
     public ResponseEntity<List<PatientResponse>> getAllPatients() {
         List<User> patients = userRepository.findByRole(Role.ROLE_PATIENT);
 
-        List<PatientResponse> response = patients.stream().map(user -> PatientResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .age(user.getAge())
-                .email(user.getEmail())
-                .gender(user.getGender())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .phone(user.getPhone())
-                .vitals(vitalsService.getLatestVitals(user.getId()))
-                .build()).collect(Collectors.toList());
+        // Fix N+1: Fetch all latest vitals in one go
+        List<VitalsResponse> allLatestVitals = vitalsService.getLatestVitalsForPatients(patients);
+        Map<Long, VitalsResponse> vitalsMap = allLatestVitals.stream()
+                .collect(Collectors.toMap(VitalsResponse::getPatientId, v -> v));
+
+        List<PatientResponse> response = patients.stream().map(user -> {
+            PatientResponse res = patientMapper.toResponse(user);
+            res.setVitals(vitalsMap.get(user.getId()));
+            return res;
+        }).collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }
@@ -69,14 +62,9 @@ public class UserController {
     public ResponseEntity<List<PatientResponse>> getAllDietitians() {
         List<User> dietitians = userRepository.findByRole(Role.ROLE_DIETITIAN);
 
-        List<PatientResponse> response = dietitians.stream().map(user -> PatientResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .gender(user.getGender())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .build()).collect(Collectors.toList());
+        List<PatientResponse> response = dietitians.stream()
+                .map(patientMapper::toResponse)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }

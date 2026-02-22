@@ -3,6 +3,8 @@ package com.example.DMS_Backend.repositories;
 import com.example.DMS_Backend.models.User;
 import com.example.DMS_Backend.models.Vitals;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,4 +14,7 @@ public interface VitalsRepository extends JpaRepository<Vitals, Long> {
     Optional<Vitals> findFirstByPatientOrderByRecordedAtDesc(User patient);
 
     boolean existsByPatient(User patient);
+
+    @Query("SELECT v FROM Vitals v WHERE v.id IN (SELECT MAX(v2.id) FROM Vitals v2 WHERE v2.patient IN :patients GROUP BY v2.patient)")
+    List<Vitals> findLatestVitalsByPatients(@Param("patients") List<User> patients);
 }
