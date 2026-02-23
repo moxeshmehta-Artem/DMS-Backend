@@ -1,7 +1,7 @@
 package com.example.DMS_Backend.service;
 
-import com.example.DMS_Backend.models.DietitianSchedule;
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.DietitianSchedule;
+import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.repositories.DietitianScheduleRepository;
 
 import lombok.RequiredArgsConstructor;

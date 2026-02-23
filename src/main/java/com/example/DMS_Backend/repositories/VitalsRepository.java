@@ -1,7 +1,7 @@
 package com.example.DMS_Backend.repositories;
 
-import com.example.DMS_Backend.models.User;
-import com.example.DMS_Backend.models.Vitals;
+import com.example.DMS_Backend.entities.User;
+import com.example.DMS_Backend.entities.Vitals;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

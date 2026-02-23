@@ -2,8 +2,8 @@ package com.example.DMS_Backend.controllers;
 
 import com.example.DMS_Backend.dto.response.PatientResponse;
 import com.example.DMS_Backend.dto.response.VitalsResponse;
-import com.example.DMS_Backend.models.Role;
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.Role;
+import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.repositories.AppointmentRepository;
 import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.service.VitalsService;
@@ -75,8 +75,8 @@ public class UserController {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             // Manual cascade delete for appointments
-            List<com.example.DMS_Backend.models.Appointment> pAppts = appointmentRepository.findByPatient(user);
-            List<com.example.DMS_Backend.models.Appointment> dAppts = appointmentRepository.findByDietitian(user);
+            List<com.example.DMS_Backend.entities.Appointment> pAppts = appointmentRepository.findByPatient(user);
+            List<com.example.DMS_Backend.entities.Appointment> dAppts = appointmentRepository.findByDietitian(user);
             appointmentRepository.deleteAll(pAppts);
             appointmentRepository.deleteAll(dAppts);
 

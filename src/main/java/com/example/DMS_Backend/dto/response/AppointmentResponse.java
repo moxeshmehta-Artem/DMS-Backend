@@ -1,6 +1,6 @@
 package com.example.DMS_Backend.dto.response;
 
-import com.example.DMS_Backend.models.AppointmentStatus;
+import com.example.DMS_Backend.entities.AppointmentStatus;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDate;

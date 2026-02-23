@@ -3,9 +3,9 @@ package com.example.DMS_Backend.service;
 import com.example.DMS_Backend.dto.request.AppointmentRequest;
 import com.example.DMS_Backend.dto.response.AppointmentResponse;
 import com.example.DMS_Backend.exception.ResourceNotFoundException;
-import com.example.DMS_Backend.models.Appointment;
-import com.example.DMS_Backend.models.AppointmentStatus;
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.Appointment;
+import com.example.DMS_Backend.entities.AppointmentStatus;
+import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.repositories.AppointmentRepository;
 import com.example.DMS_Backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -151,14 +151,14 @@ public class AppointmentService {
 
                 // 1. Fetch Doctor's Schedule for the given Day of Week
                 String dayOfWeek = date.getDayOfWeek().name(); // e.g., "MONDAY"
-                java.util.Optional<com.example.DMS_Backend.models.DietitianSchedule> scheduleOpt = dietitianScheduleRepository
+                java.util.Optional<com.example.DMS_Backend.entities.DietitianSchedule> scheduleOpt = dietitianScheduleRepository
                                 .findByDietitianAndDayOfWeek(provider, dayOfWeek);
 
                 if (scheduleOpt.isEmpty() || !scheduleOpt.get().isAvailable()) {
                         return new java.util.ArrayList<>(); // Doctor not working/available
                 }
 
-                com.example.DMS_Backend.models.DietitianSchedule schedule = scheduleOpt.get();
+                com.example.DMS_Backend.entities.DietitianSchedule schedule = scheduleOpt.get();
                 java.time.LocalTime startTime = schedule.getStartTime();
                 java.time.LocalTime endTime = schedule.getEndTime();
 

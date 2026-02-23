@@ -1,7 +1,7 @@
 package com.example.DMS_Backend.config;
 
-import com.example.DMS_Backend.models.Role;
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.Role;
+import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.service.DietitianScheduleService;
 import lombok.RequiredArgsConstructor;

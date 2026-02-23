@@ -1,6 +1,6 @@
 package com.example.DMS_Backend.service;
 
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +13,7 @@ import com.example.DMS_Backend.security.jwt.JwtUtils;
 import com.example.DMS_Backend.dto.request.LoginRequest;
 import com.example.DMS_Backend.dto.request.SignupRequest;
 import com.example.DMS_Backend.dto.response.JwtResponse;
-import com.example.DMS_Backend.models.Role;
+import com.example.DMS_Backend.entities.Role;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.DMS_Backend.models;
+package com.example.DMS_Backend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

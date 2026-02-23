@@ -1,7 +1,7 @@
 package com.example.DMS_Backend.mapper;
 
 import com.example.DMS_Backend.dto.response.PatientResponse;
-import com.example.DMS_Backend.models.User;
+import com.example.DMS_Backend.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

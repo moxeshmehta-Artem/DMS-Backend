@@ -2,7 +2,7 @@ package com.example.DMS_Backend.controllers;
 
 import com.example.DMS_Backend.dto.request.AppointmentRequest;
 import com.example.DMS_Backend.dto.response.AppointmentResponse;
-import com.example.DMS_Backend.models.AppointmentStatus;
+import com.example.DMS_Backend.entities.AppointmentStatus;
 import com.example.DMS_Backend.service.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

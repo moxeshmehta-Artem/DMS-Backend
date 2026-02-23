@@ -1,4 +1,4 @@
-package com.example.DMS_Backend.models;
+package com.example.DMS_Backend.entities;
 
 public enum Role {
     ROLE_USER,
