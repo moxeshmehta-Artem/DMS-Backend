@@ -53,15 +53,15 @@ public class AuthService {
 
     /**
      * Register a new user
-     * Throws RuntimeException if user already exists
+     * Throws UserAlreadyExistsException if user already exists
      */
     public void registerUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new RuntimeException("Error: Username is already taken!");
+            throw new com.example.DMS_Backend.exception.UserAlreadyExistsException("Error: Username is already taken!");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new RuntimeException("Error: Email is already in use!");
+            throw new com.example.DMS_Backend.exception.UserAlreadyExistsException("Error: Email is already in use!");
         }
 
         // Calculate age

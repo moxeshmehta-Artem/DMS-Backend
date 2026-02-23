@@ -27,10 +27,13 @@ public class UserController {
     private final VitalsService vitalsService;
     private final PatientMapper patientMapper;
 
+    // Added repositories for cleanup
+    private final com.example.DMS_Backend.repositories.DietitianScheduleRepository dietitianScheduleRepository;
+    private final com.example.DMS_Backend.repositories.DietPlanRepository dietPlanRepository;
+    private final com.example.DMS_Backend.repositories.VitalsRepository vitalsRepository;
+
     @GetMapping
     public ResponseEntity<List<PatientResponse>> getAllUsers() {
-        // For now, return ALL users or specific role if needed.
-        // Let's filter for valid users (maybe exclude admins in future if needed)
         List<User> users = userRepository.findAll();
 
         List<PatientResponse> response = users.stream()
@@ -74,12 +77,30 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            // Manual cascade delete for appointments
+            // 1. Manual cascade delete for appointments
             List<com.example.DMS_Backend.entities.Appointment> pAppts = appointmentRepository.findByPatient(user);
             List<com.example.DMS_Backend.entities.Appointment> dAppts = appointmentRepository.findByDietitian(user);
             appointmentRepository.deleteAll(pAppts);
             appointmentRepository.deleteAll(dAppts);
 
+            // 2. Cleanup Dietitian Schedules (if user is a dietitian)
+            List<com.example.DMS_Backend.entities.DietitianSchedule> schedules = dietitianScheduleRepository
+                    .findByDietitian(user);
+            dietitianScheduleRepository.deleteAll(schedules);
+
+            // 3. Cleanup Diet Plans (as patient or as dietitian)
+            List<com.example.DMS_Backend.entities.DietPlan> pPlans = dietPlanRepository
+                    .findByPatientOrderByCreatedAtDesc(user);
+            List<com.example.DMS_Backend.entities.DietPlan> dPlans = dietPlanRepository.findByAssignedBy(user);
+            dietPlanRepository.deleteAll(pPlans);
+            dietPlanRepository.deleteAll(dPlans);
+
+            // 4. Cleanup Vitals (as patient)
+            List<com.example.DMS_Backend.entities.Vitals> vitals = vitalsRepository
+                    .findByPatientOrderByRecordedAtDesc(user);
+            vitalsRepository.deleteAll(vitals);
+
+            // 5. Finally delete user
             userRepository.delete(user);
         }
         return ResponseEntity.ok().build();
