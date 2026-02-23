@@ -26,6 +26,7 @@ public class AppointmentService {
         private final UserRepository userRepository;
         private final com.example.DMS_Backend.repositories.VitalsRepository vitalsRepository;
         private final com.example.DMS_Backend.repositories.DietitianScheduleRepository dietitianScheduleRepository;
+        private final com.example.DMS_Backend.mapper.AppointmentMapper appointmentMapper;
 
         @Transactional
         public AppointmentResponse bookAppointment(AppointmentRequest request) {
@@ -88,7 +89,7 @@ public class AppointmentService {
                                 .build();
 
                 Appointment saved = appointmentRepository.save(appointment);
-                return mapToResponse(saved);
+                return appointmentMapper.toResponse(saved);
         }
 
         public List<AppointmentResponse> getPatientAppointments(Long patientId) {
@@ -96,7 +97,7 @@ public class AppointmentService {
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                                 "Patient not found with ID: " + patientId));
                 return appointmentRepository.findByPatient(patient).stream()
-                                .map(this::mapToResponse)
+                                .map(appointmentMapper::toResponse)
                                 .collect(Collectors.toList());
         }
 
@@ -105,13 +106,13 @@ public class AppointmentService {
                                 .orElseThrow(() -> new ResourceNotFoundException(
                                                 "Provider not found with ID: " + providerId));
                 return appointmentRepository.findByDietitian(provider).stream()
-                                .map(this::mapToResponse)
+                                .map(appointmentMapper::toResponse)
                                 .collect(Collectors.toList());
         }
 
         public List<AppointmentResponse> getAllAppointments() {
                 return appointmentRepository.findAll().stream()
-                                .map(this::mapToResponse)
+                                .map(appointmentMapper::toResponse)
                                 .collect(Collectors.toList());
         }
 
@@ -126,23 +127,7 @@ public class AppointmentService {
                         appointment.setNotes(notes);
                 }
 
-                return mapToResponse(appointmentRepository.save(appointment));
-        }
-
-        private AppointmentResponse mapToResponse(Appointment appointment) {
-                return AppointmentResponse.builder()
-                                .id(appointment.getId())
-                                .patientId(appointment.getPatient().getId())
-                                .patientName(getFullName(appointment.getPatient()))
-                                .providerId(appointment.getDietitian().getId())
-                                .providerName(getFullName(appointment.getDietitian()))
-                                .appointmentDate(appointment.getAppointmentDate())
-                                .timeSlot(appointment.getTimeSlot())
-                                .status(appointment.getStatus())
-                                .description(appointment.getDescription())
-                                .notes(appointment.getNotes())
-                                .success(true)
-                                .build();
+                return appointmentMapper.toResponse(appointmentRepository.save(appointment));
         }
 
         public List<String> getAvailableSlots(Long providerId, java.time.LocalDate date) {
@@ -208,21 +193,5 @@ public class AppointmentService {
                 java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a",
                                 java.util.Locale.ENGLISH);
                 return java.time.LocalTime.parse(timeSlot, formatter);
-        }
-
-        private String getFullName(User user) {
-                String firstName = user.getFirstName();
-                String lastName = user.getLastName();
-
-                if (firstName != null && !firstName.isBlank() && lastName != null && !lastName.isBlank()) {
-                        return firstName + " " + lastName;
-                }
-
-                if (firstName != null && !firstName.isBlank())
-                        return firstName;
-                if (lastName != null && !lastName.isBlank())
-                        return lastName;
-
-                return user.getUsername();
         }
 }

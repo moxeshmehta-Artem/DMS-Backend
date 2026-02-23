@@ -20,6 +20,7 @@ public class DietPlanService {
 
     private final DietPlanRepository dietPlanRepository;
     private final UserRepository userRepository;
+    private final com.example.DMS_Backend.mapper.DietPlanMapper dietPlanMapper;
 
     @Transactional
     public DietPlanResponse createDietPlan(Long patientId, DietPlanRequest request) {
@@ -39,7 +40,7 @@ public class DietPlanService {
                 .build();
 
         DietPlan saved = dietPlanRepository.save(dietPlan);
-        return mapToResponse(saved);
+        return dietPlanMapper.toResponse(saved);
     }
 
     public DietPlanResponse getLatestDietPlan(Long patientId) {
@@ -47,7 +48,7 @@ public class DietPlanService {
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 
         return dietPlanRepository.findFirstByPatientOrderByCreatedAtDesc(patient)
-                .map(this::mapToResponse)
+                .map(dietPlanMapper::toResponse)
                 .orElse(null);
     }
 
@@ -56,38 +57,7 @@ public class DietPlanService {
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 
         return dietPlanRepository.findByPatientOrderByCreatedAtDesc(patient).stream()
-                .map(this::mapToResponse)
+                .map(dietPlanMapper::toResponse)
                 .collect(Collectors.toList());
-    }
-
-    private DietPlanResponse mapToResponse(DietPlan plan) {
-        return DietPlanResponse.builder()
-                .id(plan.getId())
-                .patientId(plan.getPatient().getId())
-                .patientName(getFullName(plan.getPatient()))
-                .dietitianId(plan.getAssignedBy().getId())
-                .dietitianName(getFullName(plan.getAssignedBy()))
-                .breakfast(plan.getBreakfast())
-                .lunch(plan.getLunch())
-                .dinner(plan.getDinner())
-                .snacks(plan.getSnacks())
-                .createdAt(plan.getCreatedAt())
-                .build();
-    }
-
-    private String getFullName(User user) {
-        String firstName = user.getFirstName();
-        String lastName = user.getLastName();
-
-        if (firstName != null && !firstName.isBlank() && lastName != null && !lastName.isBlank()) {
-            return firstName + " " + lastName;
-        }
-
-        if (firstName != null && !firstName.isBlank())
-            return firstName;
-        if (lastName != null && !lastName.isBlank())
-            return lastName;
-
-        return user.getUsername();
     }
 }
