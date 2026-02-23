@@ -47,14 +47,29 @@ public class UserController {
     public ResponseEntity<List<PatientResponse>> getAllPatients() {
         List<User> patients = userRepository.findByRole(Role.ROLE_PATIENT);
 
-        // Fix N+1: Fetch all latest vitals in one go
+        // 1. Batch fetch latest vitals
         List<VitalsResponse> allLatestVitals = vitalsService.getLatestVitalsForPatients(patients);
         Map<Long, VitalsResponse> vitalsMap = allLatestVitals.stream()
                 .collect(Collectors.toMap(VitalsResponse::getPatientId, v -> v));
 
+        // 2. Batch fetch latest appointments
+        List<com.example.DMS_Backend.entities.Appointment> allLatestAppts = appointmentRepository
+                .findLatestAppointmentsByPatients(patients);
+        Map<Long, com.example.DMS_Backend.dto.response.LatestAppointmentResponse> apptMap = allLatestAppts.stream()
+                .collect(Collectors.toMap(
+                        a -> a.getPatient().getId(),
+                        a -> com.example.DMS_Backend.dto.response.LatestAppointmentResponse.builder()
+                                .id(a.getId())
+                                .date(a.getAppointmentDate())
+                                .status(a.getStatus())
+                                .build(),
+                        (existing, replacement) -> existing // Handle duplicates if any
+                ));
+
         List<PatientResponse> response = patients.stream().map(user -> {
             PatientResponse res = patientMapper.toResponse(user);
             res.setVitals(vitalsMap.get(user.getId()));
+            res.setLatestAppointment(apptMap.get(user.getId()));
             return res;
         }).collect(Collectors.toList());
 

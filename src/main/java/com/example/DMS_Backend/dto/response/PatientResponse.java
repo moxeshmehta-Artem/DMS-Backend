@@ -15,4 +15,5 @@ public class PatientResponse {
     private int age;
     private String phone;
     private VitalsResponse vitals;
+    private LatestAppointmentResponse latestAppointment;
 }

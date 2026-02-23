@@ -7,7 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PatientMapper {
-    @Mapping(target = "vitals", ignore = true) // Handled separately due to complex logic
+    @Mapping(target = "vitals", ignore = true)
+    @Mapping(target = "latestAppointment", ignore = true)
     @Mapping(target = "age", source = "age")
     PatientResponse toResponse(User user);
 }
