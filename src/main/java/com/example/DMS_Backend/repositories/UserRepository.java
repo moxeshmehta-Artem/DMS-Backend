@@ -1,5 +1,6 @@
 package com.example.DMS_Backend.repositories;
 
+import com.example.DMS_Backend.projection.DietitianSelectionProjection;
 import com.example.DMS_Backend.entities.User;
 import com.example.DMS_Backend.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByEmail(String email);
 
     List<User> findByRole(Role role);
+
+    List<DietitianSelectionProjection> findProjectedByRole(Role role);
 }

@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
                         .roles(Collections.singletonList(roleString))
                         .build());
             }
-        }
+        }   
         return Optional.empty();
     }
 

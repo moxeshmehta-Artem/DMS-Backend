@@ -5,6 +5,7 @@ import com.example.DMS_Backend.dto.response.PatientResponse;
 import com.example.DMS_Backend.dto.response.VitalsResponse;
 import com.example.DMS_Backend.entities.*;
 import com.example.DMS_Backend.mapper.PatientMapper;
+import com.example.DMS_Backend.projection.DietitianSelectionProjection;
 import com.example.DMS_Backend.repositories.*;
 import com.example.DMS_Backend.service.UserService;
 import com.example.DMS_Backend.service.VitalsService;
@@ -69,6 +70,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByRole(Role.ROLE_DIETITIAN).stream()
                 .map(patientMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DietitianSelectionProjection> getDietitianSelection() {
+        return userRepository.findProjectedByRole(Role.ROLE_DIETITIAN);
     }
 
     @Override

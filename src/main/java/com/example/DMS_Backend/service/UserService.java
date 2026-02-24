@@ -1,6 +1,7 @@
 package com.example.DMS_Backend.service;
 
 import com.example.DMS_Backend.dto.response.PatientResponse;
+import com.example.DMS_Backend.projection.DietitianSelectionProjection;
 import java.util.List;
 
 public interface UserService {
@@ -9,6 +10,8 @@ public interface UserService {
     List<PatientResponse> getAllPatients();
 
     List<PatientResponse> getAllDietitians();
+
+    List<DietitianSelectionProjection> getDietitianSelection();
 
     void deleteUser(Long id);
 }

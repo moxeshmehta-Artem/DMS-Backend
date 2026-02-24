@@ -2,6 +2,7 @@ package com.example.DMS_Backend.controllers;
 
 import com.example.DMS_Backend.config.RequireRole;
 import com.example.DMS_Backend.dto.response.PatientResponse;
+import com.example.DMS_Backend.projection.DietitianSelectionProjection;
 import com.example.DMS_Backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,15 @@ public class UserController {
     }
 
     @GetMapping("/dietitians")
-    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK" , "ROLE_PATIENT"})
+    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK", "ROLE_PATIENT" })
     public ResponseEntity<List<PatientResponse>> getAllDietitians() {
         return ResponseEntity.ok(userService.getAllDietitians());
+    }
+
+    @GetMapping("/dietitians/selection")
+    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK", "ROLE_PATIENT" })
+    public ResponseEntity<List<DietitianSelectionProjection>> getDietitianSelection() {
+        return ResponseEntity.ok(userService.getDietitianSelection());
     }
 
     @DeleteMapping("/{id}")
