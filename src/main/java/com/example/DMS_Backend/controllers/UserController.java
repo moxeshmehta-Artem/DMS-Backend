@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/dietitians")
-    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK" })
+    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK" , "ROLE_PATIENT"})
     public ResponseEntity<List<PatientResponse>> getAllDietitians() {
         return ResponseEntity.ok(userService.getAllDietitians());
     }
