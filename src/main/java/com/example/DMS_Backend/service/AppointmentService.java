@@ -2,196 +2,20 @@ package com.example.DMS_Backend.service;
 
 import com.example.DMS_Backend.dto.request.AppointmentRequest;
 import com.example.DMS_Backend.dto.response.AppointmentResponse;
-import com.example.DMS_Backend.exception.ResourceNotFoundException;
-import com.example.DMS_Backend.entities.Appointment;
 import com.example.DMS_Backend.entities.AppointmentStatus;
-import com.example.DMS_Backend.entities.User;
-import com.example.DMS_Backend.repositories.AppointmentRepository;
-import com.example.DMS_Backend.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class AppointmentService {
+public interface AppointmentService {
+        AppointmentResponse bookAppointment(AppointmentRequest request);
 
-        private final AppointmentRepository appointmentRepository;
-        private final UserRepository userRepository;
-        private final com.example.DMS_Backend.repositories.VitalsRepository vitalsRepository;
-        private final com.example.DMS_Backend.repositories.DietitianScheduleRepository dietitianScheduleRepository;
-        private final com.example.DMS_Backend.mapper.AppointmentMapper appointmentMapper;
+        List<AppointmentResponse> getPatientAppointments(Long patientId);
 
-        @Transactional
-        public AppointmentResponse bookAppointment(AppointmentRequest request) {
-                User patient = userRepository.findById(request.getPatientId())
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Patient not found with ID: " + request.getPatientId()));
-                User provider = userRepository.findById(request.getProviderId())
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Provider not found with ID: " + request.getProviderId()));
+        List<AppointmentResponse> getProviderAppointments(Long providerId);
 
-                // Check if patient has vitals recorded
-                if (!vitalsRepository.existsByPatient(patient)) {
-                        String msg = "Vitals not recorded, yet.";
-                        log.info("Booking restriction: Patient {} has no vitals recorded", patient.getId());
-                        return AppointmentResponse.builder()
-                                        .success(false)
-                                        .message(msg)
-                                        .build();
-                }
+        List<AppointmentResponse> getAllAppointments();
 
-                // Check if patient already has an ongoing appointment
-                List<Appointment> patientActiveAppointments = appointmentRepository.findByPatientAndStatusIn(
-                                patient, Arrays.asList(AppointmentStatus.PENDING, AppointmentStatus.CONFIRMED));
+        AppointmentResponse updateStatus(Long id, AppointmentStatus status, String notes);
 
-                if (!patientActiveAppointments.isEmpty()) {
-                        String msg = "You already have an active appointment. Please complete or cancel it before booking another.";
-                        log.info("Booking restriction: Patient {} already has an active appointment", patient.getId());
-                        return AppointmentResponse.builder()
-                                        .success(false)
-                                        .message(msg)
-                                        .build();
-                }
-
-                // Check for existing appointment in the same slot
-                List<Appointment> existing = appointmentRepository.findByAppointmentDateAndDietitian(
-                                request.getAppointmentDate(), provider);
-
-                boolean isSlotTaken = existing.stream()
-                                .anyMatch(a -> a.getTimeSlot().equals(request.getTimeSlot()) &&
-                                                a.getStatus() != AppointmentStatus.CANCELLED &&
-                                                a.getStatus() != AppointmentStatus.REJECTED);
-
-                if (isSlotTaken) {
-                        String msg = "Time slot " + request.getTimeSlot()
-                                        + " is already booked for this dietitian on " + request.getAppointmentDate();
-                        log.info("Booking conflict: {}", msg);
-                        return AppointmentResponse.builder()
-                                        .success(false)
-                                        .message(msg)
-                                        .build();
-                }
-
-                Appointment appointment = Appointment.builder()
-                                .patient(patient)
-                                .dietitian(provider)
-                                .appointmentDate(request.getAppointmentDate())
-                                .timeSlot(request.getTimeSlot())
-                                .description(request.getDescription())
-                                .status(AppointmentStatus.PENDING)
-                                .build();
-
-                Appointment saved = appointmentRepository.save(appointment);
-                return appointmentMapper.toResponse(saved);
-        }
-
-        public List<AppointmentResponse> getPatientAppointments(Long patientId) {
-                User patient = userRepository.findById(patientId)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Patient not found with ID: " + patientId));
-                return appointmentRepository.findByPatient(patient).stream()
-                                .map(appointmentMapper::toResponse)
-                                .collect(Collectors.toList());
-        }
-
-        public List<AppointmentResponse> getProviderAppointments(Long providerId) {
-                User provider = userRepository.findById(providerId)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Provider not found with ID: " + providerId));
-                return appointmentRepository.findByDietitian(provider).stream()
-                                .map(appointmentMapper::toResponse)
-                                .collect(Collectors.toList());
-        }
-
-        public List<AppointmentResponse> getAllAppointments() {
-                return appointmentRepository.findAll().stream()
-                                .map(appointmentMapper::toResponse)
-                                .collect(Collectors.toList());
-        }
-
-        @Transactional
-        public AppointmentResponse updateStatus(Long id, AppointmentStatus status, String notes) {
-                Appointment appointment = appointmentRepository.findById(id)
-                                .orElseThrow(() -> new ResourceNotFoundException(
-                                                "Appointment not found with ID: " + id));
-
-                appointment.setStatus(status);
-                if (notes != null) {
-                        appointment.setNotes(notes);
-                }
-
-                return appointmentMapper.toResponse(appointmentRepository.save(appointment));
-        }
-
-        public List<String> getAvailableSlots(Long providerId, java.time.LocalDate date) {
-                User provider = userRepository.findById(providerId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Provider not found"));
-
-                // 1. Fetch Doctor's Schedule for the given Day of Week
-                String dayOfWeek = date.getDayOfWeek().name(); // e.g., "MONDAY"
-                java.util.Optional<com.example.DMS_Backend.entities.DietitianSchedule> scheduleOpt = dietitianScheduleRepository
-                                .findByDietitianAndDayOfWeek(provider, dayOfWeek);
-
-                if (scheduleOpt.isEmpty() || !scheduleOpt.get().isAvailable()) {
-                        return new java.util.ArrayList<>(); // Doctor not working/available
-                }
-
-                com.example.DMS_Backend.entities.DietitianSchedule schedule = scheduleOpt.get();
-                java.time.LocalTime startTime = schedule.getStartTime();
-                java.time.LocalTime endTime = schedule.getEndTime();
-
-                // 2. Generate Standard Slots (1-hour intervals)
-                List<String> allSlots = new java.util.ArrayList<>();
-                java.time.LocalTime current = startTime;
-                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a",
-                                java.util.Locale.ENGLISH);
-
-                while (current.isBefore(endTime)) {
-                        allSlots.add(current.format(formatter));
-                        current = current.plusHours(1);
-                }
-
-                // 3. Fetch Booked Slots (CONFIRMED or PENDING)
-                List<Appointment> bookedAppointments = appointmentRepository
-                                .findByAppointmentDateAndDietitianAndStatusIn(
-                                                date,
-                                                provider,
-                                                Arrays.asList(AppointmentStatus.CONFIRMED, AppointmentStatus.PENDING));
-
-                List<String> bookedSlots = bookedAppointments.stream()
-                                .map(Appointment::getTimeSlot)
-                                .collect(Collectors.toList());
-
-                // 4. Subtract Booked from All
-                List<String> availableSlots = allSlots.stream()
-                                .filter(slot -> !bookedSlots.contains(slot))
-                                .collect(Collectors.toList());
-
-                // 5. Filter out past slots if date is today
-                if (date.equals(java.time.LocalDate.now())) {
-                        java.time.LocalTime now = java.time.LocalTime.now();
-                        availableSlots = availableSlots.stream()
-                                        .filter(slot -> {
-                                                java.time.LocalTime slotTime = parseTimeSlot(slot);
-                                                return slotTime.isAfter(now);
-                                        })
-                                        .collect(Collectors.toList());
-                }
-
-                return availableSlots;
-        }
-
-        private java.time.LocalTime parseTimeSlot(String timeSlot) {
-                // timeSlot format: "09:00 AM"
-                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("hh:mm a",
-                                java.util.Locale.ENGLISH);
-                return java.time.LocalTime.parse(timeSlot, formatter);
-        }
+        List<String> getAvailableSlots(Long providerId, LocalDate date);
 }

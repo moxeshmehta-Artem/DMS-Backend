@@ -1,93 +1,12 @@
 package com.example.DMS_Backend.service;
 
-import com.example.DMS_Backend.entities.User;
-import com.example.DMS_Backend.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Collections;
-
-import com.example.DMS_Backend.security.jwt.JwtUtils;
 import com.example.DMS_Backend.dto.request.LoginRequest;
 import com.example.DMS_Backend.dto.request.SignupRequest;
 import com.example.DMS_Backend.dto.response.JwtResponse;
-import com.example.DMS_Backend.entities.Role;
+import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class AuthService {
+public interface AuthService {
+    Optional<JwtResponse> login(LoginRequest loginRequest);
 
-    private final UserRepository userRepository;
-    private final DietitianScheduleService dietitianScheduleService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
-
-    /**
-     * Login user and generate JWT token
-     */
-    public Optional<JwtResponse> login(LoginRequest loginRequest) {
-        Optional<User> userOptional = userRepository.findByUsername(loginRequest.getUsername());
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            // Check password
-            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                // Generate Token
-                // Generate Token
-                String roleString = user.getRole().name();
-                String jwt = jwtUtils.generateToken(user.getUsername(), roleString, user.getId());
-
-                return Optional.of(JwtResponse.builder()
-                        .token(jwt)
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .email(user.getEmail())
-                        .roles(Collections.singletonList(roleString))
-                        .build());
-            }
-        }
-        return Optional.empty();
-    }
-
-    /**
-     * Register a new user
-     * Throws UserAlreadyExistsException if user already exists
-     */
-    public void registerUser(SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new com.example.DMS_Backend.exception.UserAlreadyExistsException("Error: Username is already taken!");
-        }
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new com.example.DMS_Backend.exception.UserAlreadyExistsException("Error: Email is already in use!");
-        }
-
-        // Calculate age
-        int age = 0;
-        if (signUpRequest.getDateOfBirth() != null) {
-            age = java.time.Period.between(signUpRequest.getDateOfBirth(), java.time.LocalDate.now()).getYears();
-        }
-
-        // Create new user's account
-        User user = User.builder()
-                .username(signUpRequest.getUsername())
-                .email(signUpRequest.getEmail())
-                .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                .role(Role.valueOf(signUpRequest.getRole()))
-                .firstName(signUpRequest.getFirstName())
-                .lastName(signUpRequest.getLastName())
-                .phone(signUpRequest.getPhone())
-                .gender(signUpRequest.getGender())
-                .dateOfBirth(signUpRequest.getDateOfBirth())
-                .age(age)
-                .build();
-
-        userRepository.save(user);
-
-        if (user.getRole() == Role.ROLE_DIETITIAN) {
-            dietitianScheduleService.createDefaultSchedule(user);
-        }
-    }
+    void registerUser(SignupRequest signUpRequest);
 }
