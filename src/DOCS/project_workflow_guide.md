@@ -1,109 +1,77 @@
-# 🏥 Diet Management System (DMS) - Comprehensive Project Flow
+# 🏥 DMS: Role-Based Project Workflow
 
-This guide provides a structural and functional overview of the DMS project, explaining how the Angular frontend and Spring Boot backend collaborate to provide a seamless healthcare experience.
+This document outlines the core workflows of the Diet Management System (DMS) through the lens of its **4 primary user roles**.
 
 ---
 
-## 🏗️ System Architecture
+## 🔄 User Interaction Ecosystem
 
-The project follows a modern **Monorepo-style** structure with a decoupled Frontend and Backend.
+The workflow is a collaborative cycle where each role depends on the previous one's output.
 
 ```mermaid
-graph TD
-    subgraph "Frontend (Angular)"
-        UI[User Interface]
-        FS[Core/Features/Services]
-        JWT_STORE[Auth/JWT Storage]
+graph LR
+    subgraph "Admin / Staff"
+        A[Admin] -- Adds --> D[Dietitian]
+        FD[FrontDesk] -- Registers --> P[Patient]
     end
 
-    subgraph "Backend (Spring Boot)"
-        CONTROLLER[REST Controllers]
-        SERVICE[Service Layer]
-        REPO[JPA Repositories]
-        SECURITY[Spring Security/JWT]
+    subgraph "Medical Interaction"
+        P -- High Vitals? --> B[Appointment Booking]
+        B -- Requests --> D
+        D -- Approves & Saves --> DP[Diet Plan]
+        DP -- Viewing --> P
     end
 
-    subgraph "Database"
-        DB[(MySQL)]
-    end
-
-    UI <--> FS
-    FS <--> CONTROLLER
-    CONTROLLER <--> SERVICE
-    SERVICE <--> REPO
-    REPO <--> DB
-    SECURITY -.-> CONTROLLER
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style FD fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#dfd,stroke:#333,stroke-width:2px
+    style P fill:#fdd,stroke:#333,stroke-width:2px
 ```
 
 ---
 
-## 🔐 Authentication & Authorization Flow
+## � 1. System Admin
+**Goal**: Manage the provider network and system health.
+- **Key Actions**:
+    - **Add Dietitians**: Creates the user and triggers automatic **Default Schedule** generation.
+    - **Monitor Logs**: Uses global logging to track system-wide events.
+- **File Reference**: [add-dietitian.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/dietitian-management/add-dietitian/add-dietitian.component.ts)
 
-The system uses **JWT (JSON Web Tokens)** for secure communication.
+## 👤 2. FrontDesk (Staff)
+**Goal**: Handle onboarding and initial patient data.
+- **Key Actions**:
+    - **Register Patients**: The first entry point for any patient in the system.
+    - **Record Vitals**: Mandatory first step. Without vitals, a patient cannot proceed to booking.
+- **File Reference**: [registration.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/registration/registration.component.ts) | [VitalsController.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/controllers/VitalsController.java)
+
+## 👤 3. Patient
+**Goal**: Receive professional dietary guidance.
+- **Key Actions**:
+    - **Search & Book**: Browses available dietitians and selects a slot.
+    - **View Plans**: Accesses the latest diet plans generated after appointments.
+- **File Reference**: [doctor-selection.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/doctor-selection/doctor-selection.component.ts) | [diet-plan-view.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/diet-plan-view/diet-plan-view.component.ts)
+
+## � 4. Dietitian
+**Goal**: Manage the clinic queue and provide diet plans.
+- **Key Actions**:
+    - **Manage Appointments**: Approves or cancels incoming patient requests.
+    - **Generate Diet Plan**: Finalizes the appointment by saving a detailed plan for the patient.
+- **File Reference**: [appointment.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/appointments/appointment.component.ts) | [DietPlanService.java](file:///home/artem/Desktop/DMS-Backend/src/main/java/com/example/DMS_Backend/service/DietPlanService.java)
+
+---
+
+## 📊 Complete Flow Sequence
 
 ```mermaid
 sequenceDiagram
-    participant U as User (Frontend)
-    participant A as AuthService (Backend)
-    participant J as JwtUtils
-    participant DB as MySQL
+    participant Admin
+    participant FD as FrontDesk
+    participant P as Patient
+    participant D as Dietitian
 
-    U->>A: POST /api/v1/auth/signin (Credentials)
-    A->>DB: Validate User
-    DB-->>A: User Data
-    A->>J: Generate Token (inc. UserId & Role)
-    J-->>A: JWT Token
-    A-->>U: AuthResponse (Token, Role, ID)
-    Note over U, A: All subsequent requests include <br/>Authorization: Bearer <token>
+    Admin->>D: Registers & Creates Schedule
+    FD->>P: Registers Patient & Records Vitals
+    P->>D: Requests Appointment Slot
+    D->>P: Approves Appointment
+    D->>P: Saves Final Diet Plan
 ```
-
----
-
-## 🚀 The Core Patient Journey
-
-This is the primary workflow of the system, from registration to receiving a diet plan.
-
-### 1. Registration & Onboarding
-Patients are registered by staff (FrontDesk) or can self-register depending on the config.
-- **Frontend**: [registration.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/registration/registration.component.ts)
-- **Backend**: `AuthService.registerPatient()` in [AuthService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/AuthService.java)
-
-### 2. Vitals Recording (The Gatekeeper)
-A patient **cannot** book an appointment until their vitals (Weight, Height, Blood Pressure, etc.) are recorded.
-- **Service**: [VitalsService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/VitalsService.java)
-- **Logic**: `AppointmentService` checks `vitalsRepository.existsByPatient(patient)` before allowing a booking.
-
-### 3. Appointment Lifecycle
-The heart of the interaction between Patient and Dietitian.
-
-```mermaid
-stateDiagram-v2
-    [*] --> PENDING: Patient Books Slot
-    PENDING --> CONFIRMED: Dietitian Approves
-    PENDING --> CANCELLED: Either Party Cancels
-    CONFIRMED --> COMPLETED: Dietitian Saves Diet Plan
-    CONFIRMED --> CANCELLED: Cancellation
-```
-
-- **Conflict Detection**: The system prevents double bookings in [AppointmentService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/AppointmentService.java).
-- **Default Schedules**: When a dietitian is added, a default schedule is automatically generated via `DietitianScheduleService`.
-
-### 4. Diet Plan Generation
-Once the consultation is over, the dietitian submits the plan.
-- **Service**: [DietPlanService.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/DietPlanService.java)
-- **Storage**: Maps the plan to the patient and marks the appointment as `COMPLETED`.
-- **View**: Patients view their latest plan in the [DietPlanViewComponent](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/diet-plan-view/diet-plan-view.component.ts).
-
----
-
-## 🛠️ Key Technical Implementations
-
-- **Global Exception Handling**: Centrally managed in [GlobalExceptionHandler.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/exception/GlobalExceptionHandler.java) to ensure consistent API error responses.
-- **Mapper Pattern**: [MapStruct](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/mapper/) is used to convert between Entities and DTOs, keeping the codebase clean.
-- **Builder Pattern**: Entities and DTOs use the Lombok `@Builder` for readable object construction.
-- **Role-Based Routing**: The Angular frontend uses guards to restrict access based on the `ROLE_PATIENT`, `ROLE_DIETITIAN`, or `ROLE_ADMIN`.
-
----
-
-> [!NOTE]
-> This document is a live companion to the codebase. For specific logic details, refer to the linked source files.
