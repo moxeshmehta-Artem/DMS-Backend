@@ -98,3 +98,259 @@ Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name
 Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
 Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
 Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.dietitian_id=?
+Hibernate: select ds1_0.id,ds1_0.day_of_week,ds1_0.dietitian_id,ds1_0.end_time,ds1_0.is_available,ds1_0.start_time from dietitian_schedules ds1_0 where ds1_0.dietitian_id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.dietitian_id=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.patient_id=? order by v1_0.recorded_at desc
+Hibernate: delete from dietitian_schedules where id=?
+Hibernate: delete from dietitian_schedules where id=?
+Hibernate: delete from dietitian_schedules where id=?
+Hibernate: delete from dietitian_schedules where id=?
+Hibernate: delete from dietitian_schedules where id=?
+Hibernate: delete from users where id=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+2026-02-24T18:27:43.135+05:30 ERROR 307172 --- [nio-8080-exec-1] c.e.DMS_Backend.security.jwt.JwtUtils    : JWT token is expired: JWT expired 523571134 milliseconds ago at 2026-02-18T11:31:32.000Z. Current time: 2026-02-24T12:57:43.134Z. Allowed clock skew: 0 milliseconds.
+2026-02-24T18:28:22.484+05:30 ERROR 307172 --- [nio-8080-exec-3] c.e.DMS_Backend.security.jwt.JwtUtils    : JWT token is expired: JWT expired 523610484 milliseconds ago at 2026-02-18T11:31:32.000Z. Current time: 2026-02-24T12:58:22.484Z. Allowed clock skew: 0 milliseconds.
+2026-02-24T18:30:53.802+05:30 ERROR 307172 --- [nio-8080-exec-8] c.e.DMS_Backend.security.jwt.JwtUtils    : JWT token is expired: JWT expired 523761802 milliseconds ago at 2026-02-18T11:31:32.000Z. Current time: 2026-02-24T13:00:53.802Z. Allowed clock skew: 0 milliseconds.
+2026-02-24T18:31:05.221+05:30 ERROR 307172 --- [nio-8080-exec-9] c.e.DMS_Backend.security.jwt.JwtUtils    : JWT token is expired: JWT expired 523773220 milliseconds ago at 2026-02-18T11:31:32.000Z. Current time: 2026-02-24T13:01:05.220Z. Allowed clock skew: 0 milliseconds.
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.username,u1_0.first_name,u1_0.last_name from users u1_0 where u1_0.role=?
+Hibernate: select u1_0.id from users u1_0 where u1_0.username=? limit ?
+Hibernate: select u1_0.id from users u1_0 where u1_0.email=? limit ?
+Hibernate: insert into users (age,date_of_birth,email,first_name,gender,last_name,password,phone,role,username) values (?,?,?,?,?,?,?,?,?,?)
+Hibernate: select ds1_0.id,ds1_0.day_of_week,ds1_0.dietitian_id,ds1_0.end_time,ds1_0.is_available,ds1_0.start_time from dietitian_schedules ds1_0 where ds1_0.dietitian_id=?
+Hibernate: insert into dietitian_schedules (day_of_week,dietitian_id,end_time,is_available,start_time) values (?,?,?,?,?)
+Hibernate: insert into dietitian_schedules (day_of_week,dietitian_id,end_time,is_available,start_time) values (?,?,?,?,?)
+Hibernate: insert into dietitian_schedules (day_of_week,dietitian_id,end_time,is_available,start_time) values (?,?,?,?,?)
+Hibernate: insert into dietitian_schedules (day_of_week,dietitian_id,end_time,is_available,start_time) values (?,?,?,?,?)
+Hibernate: insert into dietitian_schedules (day_of_week,dietitian_id,end_time,is_available,start_time) values (?,?,?,?,?)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.role=?
+Hibernate: select v1_0.id,v1_0.blood_pressure_dia,v1_0.blood_pressure_sys,v1_0.bmi,v1_0.heart_rate,v1_0.height,v1_0.patient_id,v1_0.recorded_at,v1_0.temperature,v1_0.weight from vitals v1_0 where v1_0.id in (select max(v2_0.id) from vitals v2_0 where v2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by v2_0.patient_id)
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.id in (select max(a2_0.id) from appointments a2_0 where a2_0.patient_id in (?,?,?,?,?,?,?,?,?) group by a2_0.patient_id)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id from users u1_0 where u1_0.username=? limit ?
+Hibernate: select u1_0.id from users u1_0 where u1_0.email=? limit ?
+Hibernate: insert into users (age,date_of_birth,email,first_name,gender,last_name,password,phone,role,username) values (?,?,?,?,?,?,?,?,?,?)
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.username=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select u1_0.id,u1_0.age,u1_0.date_of_birth,u1_0.email,u1_0.first_name,u1_0.gender,u1_0.last_name,u1_0.password,u1_0.phone,u1_0.role,u1_0.username from users u1_0 where u1_0.id=?
+Hibernate: select a1_0.id,a1_0.appointment_date,a1_0.created_at,a1_0.description,a1_0.dietitian_id,a1_0.notes,a1_0.patient_id,a1_0.status,a1_0.time_slot,a1_0.updated_at from appointments a1_0 where a1_0.patient_id=?
+Hibernate: select dp1_0.id,dp1_0.dietitian_id,dp1_0.breakfast,dp1_0.created_at,dp1_0.dinner,dp1_0.lunch,dp1_0.patient_id,dp1_0.snacks from diet_plans dp1_0 where dp1_0.patient_id=? order by dp1_0.created_at desc limit ?
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  19:43 h
+[[1;34mINFO[m] Finished at: 2026-02-25T12:06:29+05:30
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.springframework.boot:spring-boot-maven-plugin:4.0.2:run[m [1m(default-cli)[m on project [36mDMS-Backend[m: [1;31mProcess terminated with exit code: 137[m -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
