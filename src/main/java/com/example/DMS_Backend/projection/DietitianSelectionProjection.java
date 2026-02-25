@@ -12,4 +12,4 @@ public interface DietitianSelectionProjection {
     String getFirstName();
 
     String getLastName();
-}
+}   

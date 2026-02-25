@@ -31,7 +31,7 @@ public class Vitals {
     private Integer heartRate;
     private Double temperature;
 
-    @Column(name = "recorded_at")
+    @Column(name = "recorded_at", nullable = false, updatable = false)
     private LocalDateTime recordedAt;
 
     @PrePersist
