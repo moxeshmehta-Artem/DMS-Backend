@@ -1,5 +1,7 @@
 package com.example.DMS_Backend.dto.request;
 
+import jakarta.validation.constraints.Pattern;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -18,7 +20,9 @@ public class SignupRequest {
 
     private java.time.LocalDate dateOfBirth;
 
+    @Pattern(regexp = "^[a-zA-Z ]*$", message = "First name must not contain numbers")
     private String firstName;
+    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Last name must not contain numbers")
     private String lastName;
     private String gender;
     private String phone;
