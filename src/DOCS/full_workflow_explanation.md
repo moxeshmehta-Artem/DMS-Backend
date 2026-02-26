@@ -4,34 +4,36 @@ This document traces a single, complete workflow: **"Viewing Patient Details"**.
 
 ---
 
-## 🔄 Trace: "View Patient Details"
+## 🔄 Trace: "View Patient Details" (File-to-File)
 
 ### Phase 1: The Request (Frontend)
-1.  **User Action**: A Dietitian clicks the "View Patient Details" button in the Patient List.
-2.  **Component**: `PatientListComponent.viewPatientDetails()` is triggered within [patient-list.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/patient-list/patient-list.component.ts).
-3.  **Service**: It calls `PatientService.getPatientById(id)` which uses Angular's `HttpClient`.
-4.  **Interceptor**: Before the request leaves the browser, the [auth.interceptor.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/auth/auth.interceptor.ts) attaches the **JWT Token** to the `Authorization` header.
+1.  **Click**: `patient-list.component.html` (UI Button)
+    $\rightarrow$ calls [patient-list.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/patient-list/patient-list.component.ts) (`viewPatientDetails`)
+2.  **API Call**: [patient-list.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/patient-list/patient-list.component.ts)
+    $\rightarrow$ calls [patient.service.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/services/patient.service.ts) (`getPatientById`)
+3.  **Token Attachment**: [auth.interceptor.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/core/auth/auth.interceptor.ts)
+    $\rightarrow$ Automatically attaches JWT from `AuthService`.
 
 ### Phase 2: Border Control (Backend Security)
-5.  **CORS Check**: The request arrives at the Spring Boot server. [WebSecurityConfig](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/config/WebSecurityConfig.java) verifies it is coming from the trusted origin `http://localhost:4200`.
-6.  **JWT Validation**: The `JwtInterceptor` extracts the token, verifies it using the `jwtSecret`, and extracts the user's identity and role.
+4.  **CORS/Gate**: [WebSecurityConfig.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/config/WebSecurityConfig.java)
+    $\rightarrow$ Validates `localhost:4200` origin.
+5.  **Auth Validation**: [JwtInterceptor.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/config/JwtInterceptor.java)
+    $\rightarrow$ Uses [JwtUtils.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/security/jwt/JwtUtils.java) to verify token.
 
-### Phase 3: Business Logic (Backend Processing)
-7.  **Controller**: The request is routed to `PatientController.getPatientById()`.
-8.  **Authorization**: The `@RequireRole` annotation checks if the user has the correct permissions (e.g., `ROLE_DIETITIAN`).
-9.  **Service Layer**: `PatientService` receives the request and fetches the data from the `UserRepository`.
+### Phase 3: Business & Data Layers
+6.  **Controller Entrance**: [PatientController.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/controllers/PatientController.java)
+    $\rightarrow$ calls `PatientService` interface.
+7.  **Service Logic**: [PatientServiceImpl.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/impl/PatientServiceImpl.java)
+    $\rightarrow$ calls [UserRepository.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/repositories/UserRepository.java).
+8.  **Database Access**: [UserRepository.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/repositories/UserRepository.java)
+    $\rightarrow$ Fetches data from **MySQL `users` table**.
 
-### Phase 4: Data Layer (Database)
-10. **Repository**: `UserRepository` executes a JQL/SQL query: `SELECT * FROM users WHERE id = ?`.
-11. **Database**: MySQL finds the record in the `users` table and returns the raw **Entity** object.
-
-### Phase 5: The Response (Formatting & Security)
-12. **Mapping**: The backend maps the raw **User Entity** (which contains sensitive data like hashed passwords) to a safe **PatientResponse DTO**.
-13. **JSON Delivery**: The DTO is serialized into a JSON object and sent back to the frontend with an HTTP `200 OK` status.
-
-### Phase 6: Rendering (Frontend Update)
-14. **Subscription**: The Angular component receives the JSON data in its `.subscribe()` block.
-15. **Display**: The data is bound to `this.selectedPatientDetails`, which triggers the UI to display the details modal on the user's screen.
+### Phase 4: Formatting & Return
+9.  **Response Creation**: [PatientServiceImpl.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/service/impl/PatientServiceImpl.java)
+    $\rightarrow$ Uses [PatientMapper.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/mapper/PatientMapper.java) to create [PatientResponse.java](file:///home/artem/Desktop/DMS-Main/DMS-Backend/src/main/java/com/example/DMS_Backend/dto/response/PatientResponse.java).
+10. **JSON Response**: Serialized and sent back as JSON.
+11. **UI Refresh**: [patient-list.component.ts](file:///home/artem/Desktop/DMS-Main/DMS/src/app/features/patient-list/patient-list.component.ts)
+    $\rightarrow$ Updates `selectedPatientDetails` and shows modal in `patient-list.component.html`.
 
 ---
 
