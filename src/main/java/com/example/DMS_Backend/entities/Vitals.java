@@ -6,9 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "vitals")
 @Data
 @NoArgsConstructor
@@ -31,11 +35,7 @@ public class Vitals {
     private Integer heartRate;
     private Double temperature;
 
+    @CreatedDate
     @Column(name = "recorded_at", nullable = false, updatable = false)
     private LocalDateTime recordedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        recordedAt = LocalDateTime.now();
-    }
 }

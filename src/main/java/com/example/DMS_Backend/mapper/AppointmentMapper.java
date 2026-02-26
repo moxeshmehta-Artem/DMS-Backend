@@ -14,7 +14,6 @@ public interface AppointmentMapper {
     @Mapping(target = "patientName", source = "patient", qualifiedByName = "fullName")
     @Mapping(target = "providerId", source = "dietitian.id")
     @Mapping(target = "providerName", source = "dietitian", qualifiedByName = "fullName")
-    @Mapping(target = "success", constant = "true")
     AppointmentResponse toResponse(Appointment appointment);
 
     @Named("fullName")
