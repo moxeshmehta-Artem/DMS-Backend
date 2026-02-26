@@ -37,6 +37,24 @@ This document traces a single, complete workflow: **"Viewing Patient Details"**.
 
 ---
 
+---
+
+## 🏗️ Architectural Backbone: DTO vs. Entity vs. Projection
+
+| Component | Layer | Location Example | Role |
+| :--- | :--- | :--- | :--- |
+| **Entity** | **Database** | `User.java` | Represents the **physical table** in MySQL. Contains all columns, including sensitive data. |
+| **DTO** | **API** | `PatientResponse.java` | A **safe wrapper** used to send data to the Frontend. Hides sensitive fields and flattens complex data. |
+| **Projection** | **Repository** | `DietitianSelectionProjection.java` | An **optimization interface** used to fetch only 3-4 specific columns for fast listing. |
+
+### How they work together in this flow:
+1.  **Repository** fetches the **Entity** from the database.
+2.  **Service** uses the **Entity** to do business logic (e.g., checking roles).
+3.  **Mapper** converts the **Entity** into a **DTO**.
+4.  **Controller** returns the **DTO** to the Frontend.
+
+---
+
 ## 🔑 Key Concepts Used
 - **JWT (Stateless Auth)**: Ensures you don't need a session on the server.
 - **Interceptors**: Automate the "heavy lifting" of adding tokens.
