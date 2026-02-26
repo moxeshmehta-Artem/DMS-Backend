@@ -1,24 +1,16 @@
 package com.example.DMS_Backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "vitals")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Vitals {
+public class Vitals extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +27,4 @@ public class Vitals {
     private Integer heartRate;
     private Double temperature;
 
-    @CreatedDate
-    @Column(name = "recorded_at", nullable = false, updatable = false)
-    private LocalDateTime recordedAt;
 }

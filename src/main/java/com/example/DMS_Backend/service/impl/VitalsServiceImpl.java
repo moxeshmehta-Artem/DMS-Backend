@@ -55,7 +55,7 @@ public class VitalsServiceImpl implements VitalsService {
         User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 
-        return vitalsRepository.findByPatientOrderByRecordedAtDesc(patient).stream()
+        return vitalsRepository.findByPatientOrderByCreatedAtDesc(patient).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
@@ -65,7 +65,7 @@ public class VitalsServiceImpl implements VitalsService {
         User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 
-        return vitalsRepository.findFirstByPatientOrderByRecordedAtDesc(patient)
+        return vitalsRepository.findFirstByPatientOrderByCreatedAtDesc(patient)
                 .map(this::mapToResponse)
                 .orElse(null);
     }
@@ -115,7 +115,7 @@ public class VitalsServiceImpl implements VitalsService {
                 .bloodPressureDia(vitals.getBloodPressureDia())
                 .heartRate(vitals.getHeartRate())
                 .temperature(vitals.getTemperature())
-                .recordedAt(vitals.getRecordedAt())
+                .recordedAt(vitals.getCreatedAt())
                 .build();
     }
 }

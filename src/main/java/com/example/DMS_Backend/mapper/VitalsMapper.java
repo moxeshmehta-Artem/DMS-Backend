@@ -9,5 +9,6 @@ import org.mapstruct.Mapping;
 public interface VitalsMapper {
 
     @Mapping(target = "patientId", source = "patient.id")
+    @Mapping(target = "recordedAt", source = "createdAt")
     VitalsResponse toResponse(Vitals vitals);
 }

@@ -5,6 +5,7 @@ import lombok.Data; // Assuming Lombok is added
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -12,10 +13,11 @@ import lombok.Builder;
         @UniqueConstraint(columnNames = "email")
 })
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

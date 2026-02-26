@@ -1,10 +1,7 @@
 package com.example.DMS_Backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalTime;
 
@@ -13,10 +10,11 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "dietitian_schedules", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "dietitian_id", "day_of_week" })
 })
-public class DietitianSchedule {
+public class DietitianSchedule extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +25,7 @@ public class DietitianSchedule {
     private User dietitian;
 
     @Column(name = "day_of_week", nullable = false)
-    private String dayOfWeek; // e.g., "MONDAY", "TUESDAY"
+    private String dayOfWeek;
 
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;

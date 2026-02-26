@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
             dietPlanRepository.deleteAll(dPlans);
 
             // 4. Cleanup Vitals
-            List<Vitals> vitals = vitalsRepository.findByPatientOrderByRecordedAtDesc(user);
+            List<Vitals> vitals = vitalsRepository.findByPatientOrderByCreatedAtDesc(user);
             vitalsRepository.deleteAll(vitals);
 
             // 5. Finally delete user

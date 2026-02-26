@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface VitalsRepository extends JpaRepository<Vitals, Long> {
-    List<Vitals> findByPatientOrderByRecordedAtDesc(User patient);
+    List<Vitals> findByPatientOrderByCreatedAtDesc(User patient);
 
-    Optional<Vitals> findFirstByPatientOrderByRecordedAtDesc(User patient);
+    Optional<Vitals> findFirstByPatientOrderByCreatedAtDesc(User patient);
 
     boolean existsByPatient(User patient);
 
