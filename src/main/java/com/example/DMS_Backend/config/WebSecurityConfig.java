@@ -49,8 +49,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/api/**") // Apply to all API endpoints
-                .excludePathPatterns("/api/auth/**"); // Exclude auth endpoints (login/register)
+                .addPathPatterns("/api/**"); // Apply to all API endpoints (optional auth handled in interceptor)
     }
 
     /**
