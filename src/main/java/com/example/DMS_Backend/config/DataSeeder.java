@@ -65,7 +65,7 @@ public class DataSeeder implements CommandLineRunner {
                 }
 
                 // Dietitian
-                if (!userRepository.existsByUsername("sarah")) { // Renamed from dietitian to something unique
+                if (!userRepository.existsByUsername("sarah")) {
                         User dietitian = User.builder()
                                         .username("sarah")
                                         .email("sarah@test.com")
@@ -82,7 +82,7 @@ public class DataSeeder implements CommandLineRunner {
                 }
 
                 // Patient
-                if (!userRepository.existsByUsername("john")) { // Renamed from patient to something unique
+                if (!userRepository.existsByUsername("john")) {
                         User patient = User.builder()
                                         .username("john")
                                         .email("john@test.com")

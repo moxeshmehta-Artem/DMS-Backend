@@ -9,6 +9,8 @@ import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.repositories.VitalsRepository;
 import com.example.DMS_Backend.service.VitalsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,6 +60,15 @@ public class VitalsServiceImpl implements VitalsService {
         return vitalsRepository.findByPatientOrderByCreatedAtDesc(patient).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Slice<VitalsResponse> getVitalsHistorySliced(Long patientId, Pageable pageable) {
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
+
+        return vitalsRepository.findByPatient(patient, pageable)
+                .map(this::mapToResponse);
     }
 
     @Override

@@ -20,41 +20,27 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
     private final JwtInterceptor jwtInterceptor;
 
-    /**
-     * Password encoder for hashing passwords
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Minimal security configuration - disable Spring Security filters
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless API
-                .httpBasic(httpBasic -> httpBasic.disable()) // Disable HTTP Basic authentication
-                .formLogin(formLogin -> formLogin.disable()) // Disable form login
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()); // Allow all requests (JWT interceptor handles auth)
+        http.csrf(csrf -> csrf.disable())
+                .httpBasic(h -> h.disable())
+                .formLogin(f -> f.disable())
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }
 
-    /**
-     * Register JWT interceptor to validate tokens
-     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/api/**"); // Apply to all API endpoints (optional auth handled in interceptor)
+                .addPathPatterns("/api/**");
     }
 
-    /**
-     * CORS configuration
-     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
