@@ -77,13 +77,11 @@ public class JwtInterceptor implements HandlerInterceptor {
                     }
                 }
             } else if (isAuthRequired) {
-                // Token invalid and auth is required
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("{\"error\":\"Invalid or expired token\"}");
                 return false;
             }
         } else if (isAuthRequired) {
-            // Token missing and auth is required
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"error\":\"Missing or invalid Authorization header\"}");
             return false;
