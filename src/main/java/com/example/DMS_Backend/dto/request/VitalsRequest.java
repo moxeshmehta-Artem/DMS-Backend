@@ -19,11 +19,11 @@ public class VitalsRequest {
 
     @Min(0)
     @Max(300)
-    private Double bloodPressureSys;
+    private Double bpSystolic;
 
     @Min(0)
     @Max(300)
-    private Double bloodPressureDia;
+    private Double bpDiastolic;
 
     @Min(0)
     @Max(300)

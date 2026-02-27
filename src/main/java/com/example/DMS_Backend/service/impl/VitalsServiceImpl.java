@@ -40,8 +40,8 @@ public class VitalsServiceImpl implements VitalsService {
                 .height(request.getHeight())
                 .weight(request.getWeight())
                 .bmi(bmi)
-                .bloodPressureSys(request.getBloodPressureSys())
-                .bloodPressureDia(request.getBloodPressureDia())
+                .bpSystolic(request.getBpSystolic())
+                .bpDiastolic(request.getBpDiastolic())
                 .heartRate(request.getHeartRate())
                 .temperature(request.getTemperature())
                 .build();
@@ -95,8 +95,8 @@ public class VitalsServiceImpl implements VitalsService {
         vitals.setHeight(request.getHeight());
         vitals.setWeight(request.getWeight());
         vitals.setBmi(bmi);
-        vitals.setBloodPressureSys(request.getBloodPressureSys());
-        vitals.setBloodPressureDia(request.getBloodPressureDia());
+        vitals.setBpSystolic(request.getBpSystolic());
+        vitals.setBpDiastolic(request.getBpDiastolic());
         vitals.setHeartRate(request.getHeartRate());
         vitals.setTemperature(request.getTemperature());
 
@@ -111,8 +111,8 @@ public class VitalsServiceImpl implements VitalsService {
                 .height(vitals.getHeight())
                 .weight(vitals.getWeight())
                 .bmi(vitals.getBmi())
-                .bloodPressureSys(vitals.getBloodPressureSys())
-                .bloodPressureDia(vitals.getBloodPressureDia())
+                .bpSystolic(vitals.getBpSystolic())
+                .bpDiastolic(vitals.getBpDiastolic())
                 .heartRate(vitals.getHeartRate())
                 .temperature(vitals.getTemperature())
                 .recordedAt(vitals.getCreatedAt())

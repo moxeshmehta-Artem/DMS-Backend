@@ -12,8 +12,8 @@ public class VitalsResponse {
     private Double height;
     private Double weight;
     private Double bmi;
-    private Double bloodPressureSys;
-    private Double bloodPressureDia;
+    private Double bpSystolic;
+    private Double bpDiastolic;
     private Integer heartRate;
     private Double temperature;
     private LocalDateTime recordedAt;
