@@ -6,8 +6,6 @@ import com.example.DMS_Backend.dto.response.VitalsResponse;
 import com.example.DMS_Backend.service.VitalsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,14 +30,6 @@ public class VitalsController {
     @RequireRole({ "ROLE_FRONTDESK", "ROLE_DIETITIAN", "ROLE_PATIENT" })
     public ResponseEntity<List<VitalsResponse>> getVitalsHistory(@PathVariable Long patientId) {
         return ResponseEntity.ok(vitalsService.getVitalsHistory(patientId));
-    }
-
-    @GetMapping("/{patientId}/vitals/paged")
-    @RequireRole({ "ROLE_FRONTDESK", "ROLE_DIETITIAN", "ROLE_PATIENT" })
-    public ResponseEntity<Slice<VitalsResponse>> getPagedVitalsHistory(
-            @PathVariable Long patientId,
-            Pageable pageable) {
-        return ResponseEntity.ok(vitalsService.getVitalsHistorySliced(patientId, pageable));
     }
 
     @GetMapping("/{patientId}/vitals/latest")
