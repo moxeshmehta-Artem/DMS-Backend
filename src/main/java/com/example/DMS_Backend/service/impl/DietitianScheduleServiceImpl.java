@@ -22,6 +22,7 @@ public class DietitianScheduleServiceImpl implements DietitianScheduleService {
 
     @Override
     @Transactional
+    //create default schedule for a dietitian automatically
     public void createDefaultSchedule(User dietitian) {
         String[] days = { "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY" };
 
