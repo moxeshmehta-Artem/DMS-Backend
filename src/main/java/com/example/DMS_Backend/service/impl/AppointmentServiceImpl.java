@@ -39,6 +39,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         @Override
         @Transactional
+        //book an appointment
         public AppointmentResponse bookAppointment(AppointmentRequest request) {
                 User patient = userRepository.findById(request.getPatientId())
                                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -61,7 +62,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                         throw new BookingConflictException(
                                         "You already have an active appointment. Please complete or cancel it before booking another.");
                 }
-
+                                //Race condition check
                 List<Appointment> existing = appointmentRepository.findByAppointmentDateAndDietitian(
                                 request.getAppointmentDate(), provider);
 
@@ -90,6 +91,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 return appointmentMapper.toResponse(saved);
         }
 
+        //get appointments for a specific patient
         @Override
         public List<AppointmentResponse> getPatientAppointments(Long patientId) {
                 User patient = userRepository.findById(patientId)
@@ -100,6 +102,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .collect(Collectors.toList());
         }
 
+        //get appointments for a specific provider
         @Override
         public List<AppointmentResponse> getProviderAppointments(Long providerId) {
                 User provider = userRepository.findById(providerId)
@@ -109,7 +112,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .map(appointmentMapper::toResponse)
                                 .collect(Collectors.toList());
         }
-
+        
+        //get all appointments
         @Override
         public List<AppointmentResponse> getAllAppointments() {
                 return appointmentRepository.findAll().stream()
@@ -117,6 +121,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .collect(Collectors.toList());
         }
 
+        //update the status of the appointment
         @Override
         @Transactional
         public AppointmentResponse updateStatus(Long id, AppointmentStatus status, String notes) {
@@ -131,7 +136,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
                 return appointmentMapper.toResponse(appointmentRepository.save(appointment));
         }
-
+        //check for the availability of the slots
         @Override
         public List<String> getAvailableSlots(Long providerId, LocalDate date) {
                 User provider = userRepository.findById(providerId)
@@ -168,7 +173,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 List<String> bookedSlots = bookedAppointments.stream()
                                 .map(Appointment::getTimeSlot)
                                 .collect(Collectors.toList());
-
+        
                 List<String> availableSlots = allSlots.stream()
                                 .filter(slot -> !bookedSlots.contains(slot))
                                 .collect(Collectors.toList());
