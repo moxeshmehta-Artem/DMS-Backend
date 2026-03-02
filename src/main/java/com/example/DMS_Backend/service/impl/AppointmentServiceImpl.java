@@ -15,6 +15,7 @@ import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.repositories.VitalsRepository;
 import com.example.DMS_Backend.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import com.example.DMS_Backend.entities.DietitianSchedule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,14 +138,15 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .orElseThrow(() -> new ResourceNotFoundException("Provider not found"));
 
                 String dayOfWeek = date.getDayOfWeek().name();
-                Optional<com.example.DMS_Backend.entities.DietitianSchedule> scheduleOpt = dietitianScheduleRepository
+                Optional<DietitianSchedule> scheduleOpt = dietitianScheduleRepository
                                 .findByDietitianAndDayOfWeek(provider, dayOfWeek);
 
                 if (scheduleOpt.isEmpty() || !scheduleOpt.get().isAvailable()) {
+                        log.info("No available schedule found for provider {} on {}", providerId, dayOfWeek);
                         return new ArrayList<>();
                 }
 
-                com.example.DMS_Backend.entities.DietitianSchedule schedule = scheduleOpt.get();
+                DietitianSchedule schedule = scheduleOpt.get();
                 LocalTime startTime = schedule.getStartTime();
                 LocalTime endTime = schedule.getEndTime();
 
@@ -181,6 +183,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                         .collect(Collectors.toList());
                 }
 
+                log.info("Available slots for provider {} on {}: {}", providerId, date, availableSlots);
                 return availableSlots;
         }
 
