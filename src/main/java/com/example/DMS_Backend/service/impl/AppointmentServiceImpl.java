@@ -121,7 +121,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .collect(Collectors.toList());
         }
 
-        //update the status of the appointment(on frontdesk-dashboard)
+        //update the status of the appointment(on dietitian-dashboard)
         @Override
         @Transactional
         public AppointmentResponse updateStatus(Long id, AppointmentStatus status, String notes) {
