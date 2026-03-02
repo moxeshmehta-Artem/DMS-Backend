@@ -91,7 +91,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 return appointmentMapper.toResponse(saved);
         }
 
-        //get appointments for a specific patient
+        //get appointments for a specific patient (On Patient dashboard)
         @Override
         public List<AppointmentResponse> getPatientAppointments(Long patientId) {
                 User patient = userRepository.findById(patientId)
@@ -102,7 +102,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .collect(Collectors.toList());
         }
 
-        //get appointments for a specific provider
+        //get appointments for a specific provider(on dietitian dashboard)
         @Override
         public List<AppointmentResponse> getProviderAppointments(Long providerId) {
                 User provider = userRepository.findById(providerId)
@@ -112,8 +112,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .map(appointmentMapper::toResponse)
                                 .collect(Collectors.toList());
         }
-        
-        //get all appointments
+
+        //get all appointments(frontdesk-dashboard)
         @Override
         public List<AppointmentResponse> getAllAppointments() {
                 return appointmentRepository.findAll().stream()
@@ -121,7 +121,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                                 .collect(Collectors.toList());
         }
 
-        //update the status of the appointment
+        //update the status of the appointment(on frontdesk-dashboard)
         @Override
         @Transactional
         public AppointmentResponse updateStatus(Long id, AppointmentStatus status, String notes) {
@@ -136,7 +136,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
                 return appointmentMapper.toResponse(appointmentRepository.save(appointment));
         }
-        //check for the availability of the slots
+        //check for the availability of the slots(on dietitian dashboard)
         @Override
         public List<String> getAvailableSlots(Long providerId, LocalDate date) {
                 User provider = userRepository.findById(providerId)
