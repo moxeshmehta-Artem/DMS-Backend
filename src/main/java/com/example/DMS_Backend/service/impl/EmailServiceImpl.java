@@ -4,6 +4,7 @@ import com.example.DMS_Backend.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,15 +15,18 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender mailSender;
 
     @Override
-    public void sendCredentialsEmail(String to, String firstName, String username, String password) {
-        String subject = "Your Dietitian Credentials - DMS";
+    @Async
+    public void sendCredentialsEmail(String to, String firstName, String username, String password,
+            String accountType) {
+        log.info("Preparing to send {} credentials email to: {}", accountType, to);
+        String subject = String.format("Your %s Credentials - DMS", accountType);
         String content = String.format(
                 "Hello %s,\n\n" +
-                        "Your dietitian account has been created successfully.\n\n" +
+                        "Your %s account has been created successfully.\n\n" +
                         "Email ID: %s\n" +
                         "Username: %s\n" +
                         "Password: %s\n\n",
-                firstName, to, username, password);
+                firstName, accountType.toLowerCase(), to, username, password);
 
         try {
             if (mailSender == null) {

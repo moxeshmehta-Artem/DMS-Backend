@@ -85,12 +85,17 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         userRepository.save(user);
+        log.info("User {} saved with role: {}", user.getUsername(), user.getRole());
 
         if (user.getRole() == Role.ROLE_DIETITIAN) {
             dietitianScheduleService.createDefaultSchedule(user);
             // Send email with credentials
             emailService.sendCredentialsEmail(user.getEmail(), user.getFirstName(), user.getUsername(),
-                    signUpRequest.getPassword());
+                    signUpRequest.getPassword(), "Dietitian");
+        } else if (user.getRole() == Role.ROLE_PATIENT) {
+            // Send email for patient
+            emailService.sendCredentialsEmail(user.getEmail(), user.getFirstName(), user.getUsername(),
+                    signUpRequest.getPassword(), "Patient");
         }
     }
 }
