@@ -9,7 +9,9 @@ import com.example.DMS_Backend.repositories.UserRepository;
 import com.example.DMS_Backend.security.jwt.JwtUtils;
 import com.example.DMS_Backend.service.AuthService;
 import com.example.DMS_Backend.service.DietitianScheduleService;
+import com.example.DMS_Backend.service.EmailService;
 import com.example.DMS_Backend.exception.UserAlreadyExistsException;
+import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final DietitianScheduleService dietitianScheduleService;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
@@ -52,6 +56,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void registerUser(SignupRequest signUpRequest) {
+        log.info("Registration attempt for username: {}, role: {}", signUpRequest.getUsername(),
+                signUpRequest.getRole());
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             throw new UserAlreadyExistsException("Error: Username is already taken!");
         }
@@ -82,6 +88,9 @@ public class AuthServiceImpl implements AuthService {
 
         if (user.getRole() == Role.ROLE_DIETITIAN) {
             dietitianScheduleService.createDefaultSchedule(user);
+            // Send email with credentials
+            emailService.sendCredentialsEmail(user.getEmail(), user.getFirstName(), user.getUsername(),
+                    signUpRequest.getPassword());
         }
     }
 }
