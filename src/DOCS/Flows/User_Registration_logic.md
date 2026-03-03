@@ -1,10 +1,24 @@
-# Flow Logic: User Registration & Notification
+# Flow Logic: Authentication & Registration
 
-This document provides a line-by-line breakdown of the `AuthServiceImpl.java` registration logic, explaining how users are created and how the notification system is triggered.
+This document provides a line-by-line breakdown of the `AuthServiceImpl.java` logic, covering both the **Login** and **Registration** flows.
 
 ---
 
-## 🏗️ 1. Code Breakdown: `registerUser()`
+## 🔑 1. Code Breakdown: `login()`
+**File**: `AuthServiceImpl.java`
+
+| Line Range | Code Snippet                      | Explanation                                                                 | Logic / Purpose                                                                                  |
+| :--------- | :-------------------------------- | :-------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| **37**     | `findByUsername(...)`             | Looks up the user in the database by their unique username.                 | **Lookup**: Foundation for any auth check.                                                       |
+| **41**     | `passwordEncoder.matches(...)`    | Compares the raw password from the user with the encoded one in the DB.     | **Verification**: Securely validates identity without storing raw passwords.                     |
+| **42**     | `user.getRole().name()`           | Extracts the role assigned to the user (e.g., `ROLE_ADMIN`).                | **Authorization**: Determines what the user is allowed to do.                                    |
+| **43**     | `jwtUtils.generateToken(...)`     | Generates a Signed JSON Web Token (JWT) containing the user ID and Role.    | **Session Management**: Allows the user to stay logged in without sending a password every time. |
+| **45-51**  | `JwtResponse.builder()...build()` | Packages the JWT and user profile into a response for the frontend.         | **Response**: Supplies the frontend with the "Proof of Identity" (Token).                        |
+| **54**     | `return Optional.empty()`         | Returns empty if any check fails (username not found or password mismatch). | **Security**: Generic failure prevents attackers from knowing *why* it failed.                   |
+
+---
+
+## 🏗️ 2. Code Breakdown: `registerUser()`
 **File**: `AuthServiceImpl.java`
 
 | Line Range | Code Snippet                                | Explanation                                             | Logic / Purpose                                                                      |
