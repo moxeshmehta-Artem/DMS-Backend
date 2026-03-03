@@ -1,6 +1,5 @@
 package com.example.DMS_Backend.service.impl;
 
-import com.example.DMS_Backend.dto.request.PatientUpdateDTO;
 import com.example.DMS_Backend.dto.response.PatientResponse;
 import com.example.DMS_Backend.entities.Role;
 import com.example.DMS_Backend.entities.User;
@@ -20,6 +19,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
 
     @Override
+    // TODO: Check if user is patient
     public PatientResponse getPatientById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Error: Patient not found."));
@@ -30,30 +30,7 @@ public class PatientServiceImpl implements PatientService {
 
         return mapToPatientResponse(user);
     }
-
-    @Override
-    public PatientResponse updatePatientProfile(Long id, PatientUpdateDTO dto) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Error: Patient not found."));
-
-        if (!user.getRole().equals(Role.ROLE_PATIENT)) {
-            throw new RuntimeException("Error: User is not a patient.");
-        }
-
-        if (dto.getFirstName() != null)
-            user.setFirstName(dto.getFirstName());
-        if (dto.getLastName() != null)
-            user.setLastName(dto.getLastName());
-        if (dto.getGender() != null)
-            user.setGender(dto.getGender());
-        if (dto.getEmail() != null)
-            user.setEmail(dto.getEmail());
-
-        userRepository.save(user);
-
-        return mapToPatientResponse(user);
-    }
-
+    
     private PatientResponse mapToPatientResponse(User user) {
         PatientResponse response = patientMapper.toResponse(user);
         response.setVitals(vitalsService.getLatestVitals(user.getId()));
