@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/patients")
 @RequiredArgsConstructor
@@ -31,11 +29,5 @@ public class DietPlanController {
     public ResponseEntity<DietPlanResponse> getLatestDietPlan(@PathVariable Long patientId) {
         DietPlanResponse response = dietPlanService.getLatestDietPlan(patientId);
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{patientId}/diet-plans/history")
-    @RequireRole({ "ROLE_PATIENT", "ROLE_DIETITIAN" })
-    public ResponseEntity<List<DietPlanResponse>> getDietPlanHistory(@PathVariable Long patientId) {
-        return ResponseEntity.ok(dietPlanService.getDietPlanHistory(patientId));
     }
 }
