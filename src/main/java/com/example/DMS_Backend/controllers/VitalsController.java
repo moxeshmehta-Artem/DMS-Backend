@@ -19,7 +19,7 @@ public class VitalsController {
     private final VitalsService vitalsService;
 
     @PostMapping("/{patientId}/vitals")
-    @RequireRole({ "ROLE_FRONTDESK", "ROLE_ADMIN" })
+    @RequireRole({ "ROLE_FRONTDESK" })
     public ResponseEntity<VitalsResponse> addVitals(
             @PathVariable Long patientId,
             @Valid @RequestBody VitalsRequest request) {
@@ -39,7 +39,7 @@ public class VitalsController {
     }
 
     @PutMapping("/vitals/{vitalsId}")
-    @RequireRole("ROLE_FRONTDESK")
+    @RequireRole({ "ROLE_FRONTDESK" })
     public ResponseEntity<VitalsResponse> updateVitals(
             @PathVariable Long vitalsId,
             @Valid @RequestBody VitalsRequest request) {
