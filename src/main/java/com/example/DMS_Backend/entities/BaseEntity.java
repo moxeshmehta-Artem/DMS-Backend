@@ -34,4 +34,10 @@ public abstract class BaseEntity {
     @LastModifiedBy
     @Column(name = "last_modified_by", nullable = false)
     private String lastModifiedBy;
+
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }

@@ -15,6 +15,6 @@ public interface VitalsRepository extends JpaRepository<Vitals, Long> {
 
     boolean existsByPatient(User patient);
 
-    @Query("SELECT v FROM Vitals v WHERE v.id IN (SELECT MAX(v2.id) FROM Vitals v2 WHERE v2.patient IN :patients GROUP BY v2.patient)")
+    @Query("SELECT v FROM Vitals v WHERE v.deleted = false AND v.id IN (SELECT MAX(v2.id) FROM Vitals v2 WHERE v2.patient IN :patients AND v2.deleted = false GROUP BY v2.patient)")
     List<Vitals> findLatestVitalsByPatients(@Param("patients") List<User> patients);
 }

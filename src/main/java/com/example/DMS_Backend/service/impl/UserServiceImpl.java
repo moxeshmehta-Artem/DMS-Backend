@@ -23,9 +23,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
-    private final DietitianScheduleRepository dietitianScheduleRepository;
-    private final DietPlanRepository dietPlanRepository;
-    private final VitalsRepository vitalsRepository;
     private final VitalsService vitalsService;
     private final PatientMapper patientMapper;
 
@@ -81,28 +78,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(Long id) {
         userRepository.findById(id).ifPresent(user -> {
-            // 1. Cleanup Appointments
-            List<Appointment> pAppts = appointmentRepository.findByPatient(user);
-            List<Appointment> dAppts = appointmentRepository.findByDietitian(user);
-            appointmentRepository.deleteAll(pAppts);
-            appointmentRepository.deleteAll(dAppts);
-
-            // 2. Cleanup Schedules
-            List<DietitianSchedule> schedules = dietitianScheduleRepository.findByDietitian(user);
-            dietitianScheduleRepository.deleteAll(schedules);
-
-            // 3. Cleanup Diet Plans
-            List<DietPlan> pPlans = dietPlanRepository.findByPatientOrderByCreatedAtDesc(user);
-            List<DietPlan> dPlans = dietPlanRepository.findByAssignedBy(user);
-            dietPlanRepository.deleteAll(pPlans);
-            dietPlanRepository.deleteAll(dPlans);
-
-            // 4. Cleanup Vitals
-            List<Vitals> vitals = vitalsRepository.findByPatientOrderByCreatedAtDesc(user);
-            vitalsRepository.deleteAll(vitals);
-
-            // 5. Finally delete user
-            userRepository.delete(user);
+            user.setDeleted(true);
+            user.setDeletedAt(java.time.LocalDateTime.now());
+            userRepository.save(user);
         });
     }
 }

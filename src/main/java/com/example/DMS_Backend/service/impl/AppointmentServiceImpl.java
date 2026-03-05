@@ -60,7 +60,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (!patientActiveAppointments.isEmpty()) {
                         log.info("Booking restriction: Patient {} already has an active appointment", patient.getId());
                         throw new BookingConflictException(
-                                        "You already have an active appointment. Please complete or cancel it before booking another.");
+                                        "You already have an active appointment. Please complete it before booking another.");
                 }
                                 //Race condition check
                 List<Appointment> existing = appointmentRepository.findByAppointmentDateAndDietitian(

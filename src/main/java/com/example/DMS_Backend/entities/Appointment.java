@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 
 @Entity
+@SQLRestriction("deleted = false")
 @Table(name = "appointments")
 @Data
 @EqualsAndHashCode(callSuper = true)

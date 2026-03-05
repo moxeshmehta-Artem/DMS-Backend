@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-        @Query("SELECT a FROM Appointment a JOIN a.patient p JOIN a.dietitian d")
+        @Query("SELECT a FROM Appointment a JOIN a.patient p JOIN a.dietitian d WHERE a.deleted = false")
         List<Appointment> findAll();
 
         List<Appointment> findByPatient(User patient);
@@ -25,7 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
         List<Appointment> findByPatientAndStatusIn(User patient, List<AppointmentStatus> statuses);
 
-        @Query("SELECT a FROM Appointment a WHERE a.id IN (SELECT MAX(a2.id) FROM Appointment a2 WHERE a2.patient IN :patients GROUP BY a2.patient)")
+        @Query("SELECT a FROM Appointment a WHERE a.deleted = false AND a.id IN (SELECT MAX(a2.id) FROM Appointment a2 WHERE a2.patient IN :patients AND a2.deleted = false GROUP BY a2.patient)")
         List<Appointment> findLatestAppointmentsByPatients(
                         @Param("patients") List<User> patients);
 }

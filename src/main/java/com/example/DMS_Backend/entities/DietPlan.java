@@ -2,8 +2,10 @@ package com.example.DMS_Backend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@SQLRestriction("deleted = false")
 @Table(name = "diet_plans")
 @Data
 @NoArgsConstructor

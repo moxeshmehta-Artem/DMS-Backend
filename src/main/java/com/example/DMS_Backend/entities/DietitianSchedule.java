@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
+import org.hibernate.annotations.SQLRestriction;
 
 @Data
 @Builder
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@SQLRestriction("deleted = false")
 @Table(name = "dietitian_schedules", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "dietitian_id", "day_of_week" })
 })

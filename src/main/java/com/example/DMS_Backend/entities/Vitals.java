@@ -2,10 +2,12 @@ package com.example.DMS_Backend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "vitals")
 @Data
+@SQLRestriction("deleted = false")
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
