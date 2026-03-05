@@ -29,12 +29,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllPatients());
     }
 
-    @GetMapping("/dietitians")
-    @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK", "ROLE_PATIENT" })
-    public ResponseEntity<List<PatientResponse>> getAllDietitians() {
-        return ResponseEntity.ok(userService.getAllDietitians());
-    }
-
     @GetMapping("/dietitians/selection")
     @RequireRole({ "ROLE_ADMIN", "ROLE_FRONTDESK", "ROLE_PATIENT" })
     public ResponseEntity<List<DietitianSelectionProjection>> getDietitianSelection() {

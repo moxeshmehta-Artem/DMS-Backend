@@ -63,13 +63,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<PatientResponse> getAllDietitians() {
-        return userRepository.findByRole(Role.ROLE_DIETITIAN).stream()
-                .map(patientMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<DietitianSelectionProjection> getDietitianSelection() {
         return userRepository.findProjectedByRole(Role.ROLE_DIETITIAN);
     }

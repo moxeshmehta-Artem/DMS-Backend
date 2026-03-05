@@ -9,8 +9,6 @@ public interface UserService {
 
     List<PatientResponse> getAllPatients();
 
-    List<PatientResponse> getAllDietitians();
-
     List<DietitianSelectionProjection> getDietitianSelection();
 
     void deleteUser(Long id);

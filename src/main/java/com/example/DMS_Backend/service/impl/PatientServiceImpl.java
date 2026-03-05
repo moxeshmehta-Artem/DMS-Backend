@@ -19,7 +19,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
 
     @Override
-    // TODO: Check if user is patient
+    // View Patient Detail(Dietitian DashBoard)
     public PatientResponse getPatientById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Error: Patient not found."));
