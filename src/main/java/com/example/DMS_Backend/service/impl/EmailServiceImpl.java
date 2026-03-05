@@ -6,12 +6,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 @Slf4j
 public class EmailServiceImpl implements EmailService {
 
-    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    @Autowired(required = false)
     private JavaMailSender mailSender;
 
     @Override
@@ -27,7 +28,6 @@ public class EmailServiceImpl implements EmailService {
                         "Username: %s\n" +
                         "Password: %s\n\n",
                 firstName, accountType.toLowerCase(), to, username, password);
-
         try {
             if (mailSender == null) {
                 throw new IllegalStateException("JavaMailSender is not configured. Falling back to mock logging.");
